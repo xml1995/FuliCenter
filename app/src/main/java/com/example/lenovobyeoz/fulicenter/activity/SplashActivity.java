@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -31,8 +32,8 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
+                MFGT.gotoMainActivity(SplashActivity.this);
+                MFGT.finish(SplashActivity.this);
             }
         }).start();
     }

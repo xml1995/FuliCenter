@@ -1,6 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final long splashTime=2000;
+    private static final long sleepTime=2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +21,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected  void onStart(){
         super.onStart();
-        new Thread(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long start= System.currentTimeMillis();
-                long costTime=System.currentTimeMillis() - start;
-                if(splashTime-costTime>0){
-                    try {
-                        Thread.sleep(splashTime-costTime);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                }
+
                 MFGT.gotoMainActivity(SplashActivity.this);
-                MFGT.finish(SplashActivity.this);
+                finish();
             }
-        }).start();
+        },sleepTime);
     }
 }

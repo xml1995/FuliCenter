@@ -1,10 +1,12 @@
 package com.example.lenovobyeoz.fulicenter.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by lenovoByEOZ on 2016/10/14.
  */
 
-public class BoutiqueBean {
+public class BoutiqueBean implements Serializable {
 
 
     /**

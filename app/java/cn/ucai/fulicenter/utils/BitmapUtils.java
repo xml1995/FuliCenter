@@ -1,4 +1,4 @@
-package com.example.lenovobyeoz.fulicenter.utils;
+package cn.ucai.fulicenter.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;

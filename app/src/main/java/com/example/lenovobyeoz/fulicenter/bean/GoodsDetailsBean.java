@@ -1,28 +1,9 @@
 package com.example.lenovobyeoz.fulicenter.bean;
 
-/**
- * Created by lenovoByEOZ on 2016/10/14.
- */
+import java.io.Serializable;
+import java.util.Arrays;
 
-public class GoodsDetailsBean {
-
-
-    /**
-     * id : 280
-     * goodsId : 7677
-     * catId : 291
-     * goodsName : 双层分格饭盒 绿色
-     * goodsEnglishName : Monbento
-     * goodsBrief : PP食品级材质，轻巧、易清洗、蠕变性小，不易变形，可置于微波炉加热，可方巾洗碗机清洗。双层色彩可以随意组合，轻巧方便。
-     * shopPrice : ￥253
-     * currencyPrice : ￥293
-     * promotePrice : ￥0
-     * rankPrice : ￥293
-     * isPromote : false
-     * goodsThumb : 201509/thumb_img/7677_thumb_G_1442391216339.png
-     * goodsImg : 201509/thumb_img/7677_thumb_G_1442391216339.png
-     * addTime : 1442419200000
-     */
+public class GoodsDetailsBean implements Serializable {
 
     private int id;
     private int goodsId;
@@ -34,32 +15,12 @@ public class GoodsDetailsBean {
     private String currencyPrice;
     private String promotePrice;
     private String rankPrice;
-    private boolean isPromote;
     private String goodsThumb;
     private String goodsImg;
     private long addTime;
-    private  Properties properties;
-
-    public GoodsDetailsBean() {
-    }
-
-    public GoodsDetailsBean(int id, int goodsId, int catId, String goodsName, String goodsEnglishName, String goodsBrief, String shopPrice, String currencyPrice, String promotePrice, String rankPrice, boolean isPromote, String goodsThumb, String goodsImg, long addTime, Properties properties) {
-        this.id = id;
-        this.goodsId = goodsId;
-        this.catId = catId;
-        this.goodsName = goodsName;
-        this.goodsEnglishName = goodsEnglishName;
-        this.goodsBrief = goodsBrief;
-        this.shopPrice = shopPrice;
-        this.currencyPrice = currencyPrice;
-        this.promotePrice = promotePrice;
-        this.rankPrice = rankPrice;
-        this.isPromote = isPromote;
-        this.goodsThumb = goodsThumb;
-        this.goodsImg = goodsImg;
-        this.addTime = addTime;
-        this.properties = properties;
-    }
+    private String shareUrl;
+    private boolean isPromote;
+    private PropertiesBean[] properties;
 
     public int getId() {
         return id;
@@ -141,14 +102,6 @@ public class GoodsDetailsBean {
         this.rankPrice = rankPrice;
     }
 
-    public boolean isIsPromote() {
-        return isPromote;
-    }
-
-    public void setIsPromote(boolean isPromote) {
-        this.isPromote = isPromote;
-    }
-
     public String getGoodsThumb() {
         return goodsThumb;
     }
@@ -173,9 +126,33 @@ public class GoodsDetailsBean {
         this.addTime = addTime;
     }
 
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
+    public boolean isPromote() {
+        return isPromote;
+    }
+
+    public void setPromote(boolean promote) {
+        this.isPromote = promote;
+    }
+
+    public PropertiesBean[] getProperties() {
+        return properties;
+    }
+
+    public void setProperties(PropertiesBean[] properties) {
+        this.properties = properties;
+    }
+
     @Override
     public String toString() {
-        return "GoodsDetailsBean{" +
+        return "GoodDetailsBean{" +
                 "id=" + id +
                 ", goodsId=" + goodsId +
                 ", catId=" + catId +
@@ -186,11 +163,12 @@ public class GoodsDetailsBean {
                 ", currencyPrice='" + currencyPrice + '\'' +
                 ", promotePrice='" + promotePrice + '\'' +
                 ", rankPrice='" + rankPrice + '\'' +
-                ", isPromote=" + isPromote +
                 ", goodsThumb='" + goodsThumb + '\'' +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", addTime=" + addTime +
-                ", properties=" + properties +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", promote=" + isPromote +
+                ", properties=" + Arrays.toString(properties) +
                 '}';
     }
 }

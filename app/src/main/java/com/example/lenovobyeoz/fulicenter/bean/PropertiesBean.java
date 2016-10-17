@@ -1,20 +1,9 @@
 package com.example.lenovobyeoz.fulicenter.bean;
 
-/**
- * Created by lenovoByEOZ on 2016/10/14.
- */
+import java.io.Serializable;
+import java.util.Arrays;
 
-public class Properties {
-
-    /**
-     * id : 9529
-     * goodsId : 0
-     * colorId : 7
-     * colorName : 白色
-     * colorCode : #ffffff
-     * colorImg :
-     * colorUrl : https://detail.tmall.com/item.htm?spm=a1z10.5-b.w4011-3609973698.66.6PtkVY&id=520971761592&rn=5ddf7aff64dbe1a24da0eaf7409e3389&abbucket=15&skuId=3104519239252
-     */
+public class PropertiesBean implements Serializable {
 
     private int id;
     private int goodsId;
@@ -23,21 +12,7 @@ public class Properties {
     private String colorCode;
     private String colorImg;
     private String colorUrl;
-    private Albums albums;
-
-    public Properties() {
-    }
-
-    public Properties(int id, int goodsId, int colorId, String colorName, String colorCode, String colorImg, String colorUrl, Albums albums) {
-        this.id = id;
-        this.goodsId = goodsId;
-        this.colorId = colorId;
-        this.colorName = colorName;
-        this.colorCode = colorCode;
-        this.colorImg = colorImg;
-        this.colorUrl = colorUrl;
-        this.albums = albums;
-    }
+    private AlbumsBean[] albums;
 
     public int getId() {
         return id;
@@ -95,9 +70,17 @@ public class Properties {
         this.colorUrl = colorUrl;
     }
 
+    public AlbumsBean[] getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(AlbumsBean[] albums) {
+        this.albums = albums;
+    }
+
     @Override
     public String toString() {
-        return "Properties{" +
+        return "PropertiesBean{" +
                 "id=" + id +
                 ", goodsId=" + goodsId +
                 ", colorId=" + colorId +
@@ -105,7 +88,7 @@ public class Properties {
                 ", colorCode='" + colorCode + '\'' +
                 ", colorImg='" + colorImg + '\'' +
                 ", colorUrl='" + colorUrl + '\'' +
-                ", albums=" + albums +
+                ", albums=" + Arrays.toString(albums) +
                 '}';
     }
 }

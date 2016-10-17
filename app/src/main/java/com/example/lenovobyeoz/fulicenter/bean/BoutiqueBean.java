@@ -2,19 +2,14 @@ package com.example.lenovobyeoz.fulicenter.bean;
 
 import java.io.Serializable;
 
-/**
- * Created by lenovoByEOZ on 2016/10/14.
- */
-
 public class BoutiqueBean implements Serializable {
-
 
     /**
      * id : 262
      * title : 不一样的新妆，不一样的美丽
      * description : 快速增长修护预防脱发洗发水让头发健康快速生长更美丽
      * name : 拯救头发，美丽新妆
-     * imageurl : cat_image/boutique1.png
+     * imageurl : cat_image/boutique1.jpg
      */
 
     private int id;
@@ -61,9 +56,6 @@ public class BoutiqueBean implements Serializable {
 
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
-    }
-
-    public BoutiqueBean() {
     }
 
     @Override

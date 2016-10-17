@@ -1,17 +1,8 @@
 package com.example.lenovobyeoz.fulicenter.bean;
 
-/**
- * Created by lenovoByEOZ on 2016/10/14.
- */
+import java.io.Serializable;
 
-public class Albums {
-
-    /**
-     * pid : 7677
-     * imgId : 28296
-     * imgUrl : 201509/goods_img/7677_P_1442391216432.png
-     * thumbUrl : no_picture.gif
-     */
+public class AlbumsBean implements Serializable {
 
     private int pid;
     private int imgId;
@@ -50,19 +41,9 @@ public class Albums {
         this.thumbUrl = thumbUrl;
     }
 
-    public Albums() {
-    }
-
-    public Albums(int pid, int imgId, String imgUrl, String thumbUrl) {
-        this.pid = pid;
-        this.imgId = imgId;
-        this.imgUrl = imgUrl;
-        this.thumbUrl = thumbUrl;
-    }
-
     @Override
     public String toString() {
-        return "Albums{" +
+        return "AlbumsBean{" +
                 "pid=" + pid +
                 ", imgId=" + imgId +
                 ", imgUrl='" + imgUrl + '\'' +

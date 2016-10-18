@@ -1,21 +1,21 @@
 package com.example.lenovobyeoz.fulicenter.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.fragment.NewGoodsFragment;
 import com.example.lenovobyeoz.fulicenter.utils.L;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
+
+
     @BindView(R.id.layout_new_goods)
-    RadioButton mLayoutNewGoods;
+    RadioButton mLayoutNewGood;
     @BindView(R.id.layout_boutique)
     RadioButton mLayoutBoutique;
     @BindView(R.id.layout_category)
@@ -26,56 +26,68 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvCartHint;
     @BindView(R.id.layout_personal_center)
     RadioButton mLayoutPersonalCenter;
-    @BindView(R.id.rg_bottom_layout)
-    RadioGroup mRgBottomLayout;
 
     int index;
     RadioButton[] rbs;
+    Fragment[] mFragments;
+    NewGoodsFragment mNewGoodsFragment;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        L.i("MainActivity onCreate");
+        L.d("MainActivity onCreate");
         initView();
+        initFragment();
+    }
+
+    private void initFragment() {
+        mFragments=new Fragment[5];
+        mNewGoodsFragment=new NewGoodsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container,mNewGoodsFragment)
+                .show(mNewGoodsFragment)
+                .commit();
     }
 
     private void initView() {
-        rbs=new RadioButton[5];
-        rbs[0]=mLayoutNewGoods;
-        rbs[1]=mLayoutBoutique;
-        rbs[2]=mLayoutCategory;
-        rbs[3]=mLayoutCart;
-        rbs[4]=mLayoutPersonalCenter;
+        rbs = new RadioButton[5];
+        rbs[0] = mLayoutNewGood;
+        rbs[1] = mLayoutBoutique;
+        rbs[2] = mLayoutCategory;
+        rbs[3] = mLayoutCart;
+        rbs[4] = mLayoutPersonalCenter;
     }
 
     public void onCheckedChange(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layout_new_goods:
-                index=0;
+                index = 0;
                 break;
             case R.id.layout_boutique:
-                index=1;
+                index = 1;
                 break;
             case R.id.layout_category:
-                index=2;
+                index = 2;
                 break;
             case R.id.layout_cart:
-                index=3;
+                index = 3;
                 break;
             case R.id.layout_personal_center:
-                index=4;
+                index = 4;
                 break;
         }
         setRadioButtonStatus();
-
     }
 
     private void setRadioButtonStatus() {
-        for(int i=0;i<rbs.length;i++){
-            if(i==index){
+        L.d("index="+index);
+        for (int i = 0; i < rbs.length; i++) {
+            if (i == index) {
                 rbs[i].setChecked(true);
-            }else{
+            } else {
                 rbs[i].setChecked(false);
             }
         }

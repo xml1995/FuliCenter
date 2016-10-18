@@ -17,6 +17,7 @@ import com.example.lenovobyeoz.fulicenter.adapter.GoodsAdapter;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.net.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 
@@ -25,8 +26,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-
 /**
  * Created by xiaomiao on 2016/10/17.
  */
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
 public class NewGoodsFragment extends Fragment {
 
     @BindView(R.id.tv_refresh)
-    TextView mtvRfresh;
+    TextView mTvRfresh;
     @BindView(R.id.rv)
     RecyclerView mrv;
     @BindView(R.id.srl)
@@ -61,7 +60,9 @@ public class NewGoodsFragment extends Fragment {
         NetDao.downloadNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
-                     L.e("sdfafdafa");
+                msrl.setRefreshing(false);
+                mTvRfresh.setVisibility(View.GONE);
+                     L.e("result="+result);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     mAdapter.initData(list);
@@ -70,6 +71,9 @@ public class NewGoodsFragment extends Fragment {
 
             @Override
             public void onError(String error) {
+                msrl.setRefreshing(false);
+                mTvRfresh.setVisibility(View.GONE);
+                CommonUtils.showShortToast(error);
                 L.e("error: "+error);
             }
         });

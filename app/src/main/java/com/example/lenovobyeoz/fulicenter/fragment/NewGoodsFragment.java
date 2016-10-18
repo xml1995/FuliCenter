@@ -22,9 +22,12 @@ import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.lenovobyeoz.fulicenter.I.PAGE_ID_DEFAULT;
 
 /**
  * Created by xiaomiao on 2016/10/17.
@@ -43,8 +46,6 @@ public class NewGoodsFragment extends Fragment {
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
     int pageId=1;
-
-
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
@@ -62,10 +63,16 @@ public class NewGoodsFragment extends Fragment {
             public void onSuccess(NewGoodsBean[] result) {
                 msrl.setRefreshing(false);
                 mTvRfresh.setVisibility(View.GONE);
+                mAdapter.setMore(true);
                      L.e("result="+result);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     mAdapter.initData(list);
+                    if (list.size() >= PAGE_ID_DEFAULT) {
+                        mAdapter.setMore(false);
+                    }else {
+                        mAdapter.setMore(false);
+                    }
                 }
             }
 

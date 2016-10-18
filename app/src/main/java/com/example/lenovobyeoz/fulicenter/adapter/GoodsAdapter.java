@@ -1,6 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.activity.GoodsDetailActivity;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
 
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Angela on 2016/10/17.
@@ -26,9 +29,8 @@ import butterknife.ButterKnife;
 
 public class GoodsAdapter extends Adapter {
     List<NewGoodsBean> mList;
-    Context mContext;
+    private static Context mContext;
     boolean isMore;
-
     public GoodsAdapter(Context context,List<NewGoodsBean> list) {
         this.mContext=context;
         mList = new ArrayList<>();
@@ -67,6 +69,7 @@ public class GoodsAdapter extends Adapter {
             ImageLoader.downloadImg(mContext,vh.mIvGoodsThumb,goods.getGoodsThumb());
             vh.mTvGoodsName.setText(goods.getGoodsName());
             vh.mTvGoodsPrice.setText(goods.getCurrencyPrice());
+            vh.mLayoutGoods.setTag(goods.getGoodsId());
         }
     }
 
@@ -96,9 +99,6 @@ public class GoodsAdapter extends Adapter {
         notifyDataSetChanged();
     }
 
-    public void addData(int list) {
-    }
-
     public void addData(ArrayList<NewGoodsBean> list) {
         mList.addAll(list);
         notifyDataSetChanged();
@@ -118,6 +118,13 @@ public class GoodsAdapter extends Adapter {
             super(view);
 
             ButterKnife.bind(this, view);
+        }
+        @OnClick(R.id.layout_goods)
+        public void onGoodsItemClick(){
+            int goodsId= (int) mLayoutGoods.getTag();
+            mContext.startActivity( new Intent( mContext, GoodsDetailActivity.class)
+                    .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+
         }
     }
 

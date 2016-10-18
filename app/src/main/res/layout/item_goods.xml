@@ -6,6 +6,7 @@
     android:background="@color/btn_white_normal"
     android:layout_margin="15dp"
     android:id="@+id/layout_goods"
+    android:padding="10dp"
     android:weightSum="1">
     <ImageView
         android:id="@+id/ivGoodsThumb"

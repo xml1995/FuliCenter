@@ -15,6 +15,7 @@ import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.GoodsDetailActivity;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +123,7 @@ public class GoodsAdapter extends Adapter {
         @OnClick(R.id.layout_goods)
         public void onGoodsItemClick(){
             int goodsId= (int) mLayoutGoods.getTag();
-            mContext.startActivity( new Intent( mContext, GoodsDetailActivity.class)
-                    .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+            MFGT.gotoGoodsDetailsActivity(mContext,goodsId);
 
         }
     }

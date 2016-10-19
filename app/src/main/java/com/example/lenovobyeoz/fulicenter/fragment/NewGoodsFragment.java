@@ -75,11 +75,10 @@ public class NewGoodsFragment extends Fragment {
         mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSrl.setRefreshing(true);
-                mTvRfresh.setVisibility(View.VISIBLE);
-                pageId=1;
-                downloadNewGoods(I.ACTION_PULL_DOWN);
-
+                mSrl.setRefreshing( true );
+                mTvRfresh.setVisibility( View.VISIBLE );
+                pageId = 1;
+                downloadNewGoods( I.ACTION_PULL_DOWN );
             }
 
         });
@@ -95,30 +94,27 @@ public class NewGoodsFragment extends Fragment {
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List( result );
                     if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
-                    mAdapter.initData( list );
-                } else {
-                    mAdapter.addData(list);
-                }
-                if (list.size() >= PAGE_SIZE_DEFAULT) {
-                    mAdapter.setMore( false );
+                        mAdapter.initData( list );
+                    } else {
+                        mAdapter.addData( list );
+                    }
+                    if (list.size() >= PAGE_SIZE_DEFAULT) {
+                        mAdapter.setMore( false );
+                    }
                 } else {
                     mAdapter.setMore( false );
                 }
             }
-        }
 
             @Override
             public void onError(String error) {
-                mSrl.setRefreshing(false);
-                mAdapter.setMore(false);
-                mTvRfresh.setVisibility(View.GONE);
-                CommonUtils.showShortToast(error);
-                L.e("error: "+error);
+                mSrl.setRefreshing( false );
+                mAdapter.setMore( false );
+                mTvRfresh.setVisibility( View.GONE );
+                CommonUtils.showShortToast( error );
+                L.e( "error: " + error );
             }
-
-            }
-
-            );
+        });
     }
     private void setPullUpListener() {
         mRv.setOnScrollListener( new RecyclerView.OnScrollListener(){
@@ -160,3 +156,4 @@ public class NewGoodsFragment extends Fragment {
     }
 
 }
+

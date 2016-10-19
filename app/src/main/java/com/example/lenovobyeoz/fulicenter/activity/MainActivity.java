@@ -1,9 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.activity;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -13,7 +11,7 @@ import com.example.lenovobyeoz.fulicenter.fragment.NewGoodsFragment;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.layout_new_good)
     RadioButton mLayoutNewGood;
     @BindView(R.id.layout_boutique)
@@ -26,30 +24,25 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvCartHint;
     @BindView(R.id.layout_personal_center)
     RadioButton mLayoutPersonalCenter;
-
     int index;
     int currentIndex;
     RadioButton[] rbs;
     Fragment[] mFragments;
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
-
     @Override
-        protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        L.d("MainActivity onCreate");
-        initView();
-        initFragment();
+        L.i("MainActivity onCreate");
+        super.onCreate(savedInstanceState);
     }
-
     private void initFragment() {
-        mFragments=new Fragment[5];
-        mNewGoodsFragment=new NewGoodsFragment();
-        mBoutiqueFragment=new BoutiqueFragment();
-        mFragments[0]=mNewGoodsFragment;
-        mFragments[1]=mBoutiqueFragment;
+        mFragments = new Fragment[5];
+        mNewGoodsFragment = new NewGoodsFragment();
+        mBoutiqueFragment = new BoutiqueFragment();
+        mFragments[0] = mNewGoodsFragment;
+        mFragments[1] = mBoutiqueFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container,mNewGoodsFragment)
@@ -58,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 .show(mNewGoodsFragment)
                 .commit();
     }
-
-    private void initView() {
+    @Override
+    protected void initView() {
         rbs = new RadioButton[5];
         rbs[0] = mLayoutNewGood;
         rbs[1] = mLayoutBoutique;
@@ -67,9 +60,15 @@ public class MainActivity extends AppCompatActivity {
         rbs[3] = mLayoutCart;
         rbs[4] = mLayoutPersonalCenter;
     }
-
+    @Override
+    protected void initData() {
+        initFragment();
+    }
+    @Override
+    protected void setListener() {
+    }
     public void onCheckedChange(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.layout_new_good:
                 index = 0;
                 break;
@@ -87,30 +86,30 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         setFragment();
-        setRadioButtonStatus();
     }
-
     private void setFragment() {
-        if (index!=currentIndex){
-        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-      ft.hide( mFragments[currentIndex]);
-            if (!mFragments[index].isAdded()){
-                ft.add( R.id.fragment_container,mFragments[index]);
+        if(index!=currentIndex) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.hide(mFragments[currentIndex]);
+            if(!mFragments[index].isAdded()){
+                ft.add(R.id.fragment_container,mFragments[index]);
             }
-            ft.show( mFragments[index]).commit();
+            ft.show(mFragments[index]).commit();
         }
         setRadioButtonStatus();
-        currentIndex=index;
+        currentIndex = index;
     }
-
     private void setRadioButtonStatus() {
-        L.d("index="+index);
-        for (int i = 0; i < rbs.length; i++) {
-            if (i == index) {
+        L.e("index="+index);
+        for (int i=0;i<rbs.length;i++){
+            if(i==index){
                 rbs[i].setChecked(true);
-            } else {
+            }else{
                 rbs[i].setChecked(false);
             }
         }
+    }
+    public void onBackPressed(){
+        finish();
     }
 }

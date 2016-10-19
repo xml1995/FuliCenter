@@ -1,7 +1,6 @@
 package com.example.lenovobyeoz.fulicenter.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
-import com.example.lenovobyeoz.fulicenter.activity.GoodsDetailActivity;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;

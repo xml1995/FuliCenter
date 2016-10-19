@@ -14,9 +14,7 @@ import com.example.lenovobyeoz.fulicenter.utils.L;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
-
-
-    @BindView(R.id.layout_new_goods)
+    @BindView(R.id.layout_new_good)
     RadioButton mLayoutNewGood;
     @BindView(R.id.layout_boutique)
     RadioButton mLayoutBoutique;
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCheckedChange(View v) {
         switch (v.getId()) {
-            case R.id.layout_new_goods:
+            case R.id.layout_new_good:
                 index = 0;
                 break;
             case R.id.layout_boutique:

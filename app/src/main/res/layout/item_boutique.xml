@@ -18,13 +18,13 @@
         android:gravity="top"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_toRightOf="@+id/ivBoutiqueImg"
+        android:layout_toRightOf="@id/ivBoutiqueImg"
         android:background="@color/white">
         <TextView
             android:id="@+id/tvBoutiqueTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/list_item_title"
             android:layout_marginTop="20dp"
             android:ellipsize="end"
             android:textSize="16sp"
@@ -42,12 +42,11 @@
             android:id="@+id/tvBoutiqueDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/btn_gray_normal"
+            android:textColor="@color/gray_normal"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:text="2015/W Trends Report"/>
+            android:text="2015F/W Trends Report"/>
     </LinearLayout>
-
 </RelativeLayout>

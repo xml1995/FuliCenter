@@ -2,7 +2,6 @@ package com.example.lenovobyeoz.fulicenter.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,22 +21,15 @@ import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.view.SpaceItemDecoration;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import static com.example.lenovobyeoz.fulicenter.I.PAGE_SIZE_DEFAULT;
 
-/**
- * Created by xiaomiao on 2016/10/17.
- */
-
-public class NewGoodsFragment extends Fragment {
+public class NewGoodsFragment extends BaseFragment {
 
     @BindView(R.id.tv_refresh)
-    TextView mTvRfresh;
+    TextView mTvRefresh;
     @BindView(R.id.rv)
     RecyclerView mRv;
     @BindView(R.id.srl)
@@ -52,29 +44,28 @@ public class NewGoodsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,@Nullable  ViewGroup container,@Nullable  Bundle savedInstanceState) {
+        L.e("NewGoodsFragment.onCreateView");
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
         mList = new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mList);
-        initView();
-        initData();
-        setListener();
+        super.onCreateView(inflater,container,savedInstanceState);
         return layout;
     }
 
-
-    private void setListener() {
-        setPullUpListener();
-        setPullDownListener();
-    }
+        @Override
+            protected void setListener() {
+            setPullUpListener();
+            setPullDownListener();
+        }
 
     private void setPullDownListener() {
         mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mSrl.setRefreshing( true );
-                mTvRfresh.setVisibility( View.VISIBLE );
+                mTvRefresh.setVisibility( View.VISIBLE );
                 pageId = 1;
                 downloadNewGoods( I.ACTION_PULL_DOWN );
             }
@@ -86,7 +77,7 @@ public class NewGoodsFragment extends Fragment {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mSrl.setRefreshing( false );
-                mTvRfresh.setVisibility( View.GONE );
+                mTvRefresh.setVisibility( View.GONE );
                 mAdapter.setMore( true );
                 L.e( "result=" + result );
                 if (result != null && result.length > 0) {
@@ -108,7 +99,7 @@ public class NewGoodsFragment extends Fragment {
             public void onError(String error) {
                 mSrl.setRefreshing( false );
                 mAdapter.setMore( false );
-                mTvRfresh.setVisibility( View.GONE );
+                mTvRefresh.setVisibility( View.GONE );
                 CommonUtils.showShortToast( error );
                 L.e( "error: " + error );
             }
@@ -135,12 +126,13 @@ public class NewGoodsFragment extends Fragment {
             }
         });
     }
-    private void initData() {
-        downloadNewGoods(I.ACTION_DOWNLOAD);
-    }
-
-    private void initView() {
-        mSrl.setColorSchemeColors(
+        @Override
+            protected void initData() {
+            downloadNewGoods(I.ACTION_DOWNLOAD);
+            }
+        @Override
+            protected void initView() {
+                mSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
                 getResources().getColor(R.color.google_red),

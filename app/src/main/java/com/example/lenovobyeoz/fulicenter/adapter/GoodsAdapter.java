@@ -30,10 +30,10 @@ import butterknife.OnClick;
 
 public class GoodsAdapter extends Adapter {
     List<NewGoodsBean> mList;
-    private static Context mContext;
+    static Context mContext;
     boolean isMore;
     public GoodsAdapter(Context context,List<NewGoodsBean> list) {
-        this.mContext=context;
+        mContext=context;
         mList = new ArrayList<>();
         mList.addAll(list);
     }

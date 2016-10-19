@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.adapter.BoutiqueAdapter;
@@ -22,14 +20,9 @@ import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.view.SpaceItemDecoration;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.lenovobyeoz.fulicenter.I.PAGE_SIZE_DEFAULT;
-
 public class BoutiqueFragment extends Fragment {
     @BindView(R.id.tv_refresh)
     TextView mTvRefresh;
@@ -41,6 +34,7 @@ public class BoutiqueFragment extends Fragment {
     MainActivity mContext;
     BoutiqueAdapter mAdapter;
     ArrayList<BoutiqueBean>mList;
+    int pageId=1;
 
     @Nullable
     @Override
@@ -52,50 +46,52 @@ public class BoutiqueFragment extends Fragment {
         mAdapter=new BoutiqueAdapter(mContext,mList);
         initView();
         initData();
+        setListener();
         return layout;
     }
-
-    private void initData() {
-        downLoadBoutique(I.ACTION_DOWNLOAD);
+    private void setListener() {
+        setPullDownListener();
     }
 
-    private void downLoadBoutique(final int action) {
-        NetDao.downloadBoutique( mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>() {
+    private void setPullDownListener() {
+        mSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onSuccess(BoutiqueBean[] result) {
-                mSrl.setRefreshing( false );
-                mTvRefresh.setVisibility( View.GONE );
-                mAdapter.setMore( true );
-                L.e( "result=" + result );
-                if (result != null && result.length > 0) {
-                    ArrayList<BoutiqueBean> list=ConvertUtils.array2List( result );
-                    if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
-                        mAdapter.initData( list );
-                    } else {
-                        mAdapter.addData(list);
-                    }
-                    if (list.size() >= PAGE_SIZE_DEFAULT) {
-                        mAdapter.setMore( false );
-                    } else {
-                        mAdapter.setMore( false );
-                    }
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-                mSrl.setRefreshing(false);
-                mAdapter.setMore(false);
-                mTvRefresh.setVisibility(View.GONE);
-                CommonUtils.showShortToast(error);
-                L.e("error: "+error);
+            public void onRefresh() {
+                mSrl.setRefreshing( true );
+                mTvRefresh.setVisibility( View.VISIBLE );
+                pageId = 1;
+                downLoadBoutique();
             }
 
         });
     }
 
-    private void initView() {
-        mSrl.setColorSchemeColors(
+    private void initData() {
+        downLoadBoutique();
+    }
+    private void downLoadBoutique() {
+        NetDao.downloadBoutique( mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>(){
+            @Override
+            public void onSuccess(BoutiqueBean[] result) {
+                mSrl.setRefreshing( false );
+                mTvRefresh.setVisibility( View.GONE );
+                L.e( "result=" + result );
+                if (result != null && result.length > 0) {
+                    ArrayList<BoutiqueBean> list = ConvertUtils.array2List( result );
+                        mAdapter.initData( list );
+                    }
+                }
+                @Override
+                public void onError (String error){
+                    mSrl.setRefreshing( false );
+                    mTvRefresh.setVisibility( View.GONE );
+                    CommonUtils.showShortToast( error );
+                    L.e( "error:" + error );
+                }
+        });
+    }
+            private void initView() {
+                mSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
                 getResources().getColor(R.color.google_red),

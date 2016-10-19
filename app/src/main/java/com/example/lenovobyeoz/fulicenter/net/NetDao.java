@@ -6,6 +6,7 @@ import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 
 public class NetDao {
     public static void downloadNewGoods(Context context, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener) {
@@ -28,8 +29,7 @@ public class NetDao {
     public static void downloadBoutique(Context context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
         OkHttpUtils utils=new OkHttpUtils( context );
         utils.setRequestUrl( I.REQUEST_FIND_BOUTIQUES )
-                .targetClass( I.Boutique[].class )
+                .targetClass(BoutiqueBean[].class)
                 .execute( listener );
     }
-
 }

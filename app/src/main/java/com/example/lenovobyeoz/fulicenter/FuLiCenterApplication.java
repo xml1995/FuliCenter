@@ -2,18 +2,22 @@ package com.example.lenovobyeoz.fulicenter;
 
 import android.app.Application;
 
-/**
- * Created by lenovoByEOZ on 2016/10/17.
- */
 
-public class FuLiCenterApplication extends Application{
+public class FuLiCenterApplication extends Application {
+    public static FuLiCenterApplication application;
     private static FuLiCenterApplication instance;
-    public FuLiCenterApplication(){
-        instance=this;
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application = this;
+        instance = this;
     }
+
     public static FuLiCenterApplication getInstance(){
         if(instance==null){
-            instance=new FuLiCenterApplication();
+            instance = new FuLiCenterApplication();
         }
         return instance;
     }

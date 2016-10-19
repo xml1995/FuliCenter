@@ -17,7 +17,7 @@ import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.adapter.GoodsAdapter;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
-import com.example.lenovobyeoz.fulicenter.net.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.id.list;
-import static com.example.lenovobyeoz.fulicenter.I.PAGE_ID_DEFAULT;
 import static com.example.lenovobyeoz.fulicenter.I.PAGE_SIZE_DEFAULT;
 
 /**

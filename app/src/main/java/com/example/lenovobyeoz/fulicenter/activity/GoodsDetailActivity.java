@@ -11,7 +11,7 @@ import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.AlbumsBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
-import com.example.lenovobyeoz.fulicenter.net.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;

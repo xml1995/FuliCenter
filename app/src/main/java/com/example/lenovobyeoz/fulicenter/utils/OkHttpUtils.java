@@ -1,10 +1,9 @@
-package com.example.lenovobyeoz.fulicenter.net;
+package com.example.lenovobyeoz.fulicenter.utils;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -145,7 +144,7 @@ public class OkHttpUtils<T> {
 
 
     private void initHandler() {
-        mHandler = new Handler(FuLiCenterApplication.getInstance().getMainLooper()) {
+        mHandler = new Handler(FuLiCenterApplication.application.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {

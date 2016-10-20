@@ -24,9 +24,13 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     ArrayList<CategoryGroupBean> mGroupList;
 
     ArrayList<ArrayList<CategoryChildBean>> mChildList;
+
+
+
     public CategoryAdapter(Context context, ArrayList<CategoryGroupBean> groupList,
 
                            ArrayList<ArrayList<CategoryChildBean>> childList) {
+
         mContext = context;
 
         mGroupList = new ArrayList<>();
@@ -36,13 +40,21 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         mChildList = new ArrayList<>();
 
         mChildList.addAll(childList);
+
     }
+
+
+
     @Override
 
     public int getGroupCount() {
 
         return mGroupList != null ? mGroupList.size() : 0;
+
     }
+
+
+
     @Override
 
     public int getChildrenCount(int groupPosition) {
@@ -50,7 +62,11 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return mChildList != null && mChildList.get(groupPosition) != null ?
 
                 mChildList.get(groupPosition).size() : 0;
+
     }
+
+
+
     @Override
 
     public CategoryGroupBean getGroup(int groupPosition) {
@@ -58,6 +74,9 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return mGroupList != null ? mGroupList.get(groupPosition) : null;
 
     }
+
+
+
     @Override
 
     public CategoryChildBean getChild(int groupPosition, int childPosition) {
@@ -65,19 +84,41 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return mChildList != null && mChildList.get(groupPosition) != null ?
 
                 mChildList.get(groupPosition).get(childPosition) : null;
+
     }
+
+
+
     @Override
+
     public long getGroupId(int i) {
+
         return 0;
+
     }
+
+
+
     @Override
+
     public long getChildId(int i, int i1) {
+
         return 0;
+
     }
+
+
+
     @Override
+
     public boolean hasStableIds() {
+
         return false;
+
     }
+
+
+
     @Override
 
     public View getGroupView(int groupPosition, boolean isExpand, View view, ViewGroup viewGroup) {
@@ -99,6 +140,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder = (GroupViewHolder) view.getTag();
 
         }
+
         CategoryGroupBean group = getGroup(groupPosition);
 
         if (group != null) {
@@ -108,38 +150,87 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder.mTvGroupName.setText(group.getName());
 
             holder.mIvIndicator.setImageResource(isExpand ? R.mipmap.expand_off : R.mipmap.expand_on);
+
         }
+
         return view;
+
     }
+
+
+
     @Override
+
     public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
 
         ChildViewHolder holder;
 
         if (view == null) {
+
             view = View.inflate(mContext, R.layout.item_category_child, null);
+
             holder = new ChildViewHolder(view);
+
             view.setTag(holder);
+
         } else {
+
             holder = (ChildViewHolder) view.getTag();
+
         }
+
         CategoryChildBean child = getChild(groupPosition, childPosition);
+
         if(child!=null){
+
             ImageLoader.downloadImg(mContext,holder.mIvCategoryChildThumb,child.getImageUrl());
+
             holder.mTvCategoryChildName.setText(child.getName());
+
         }
+
         return view;
     }
     @Override
+
     public boolean isChildSelectable(int i, int i1) {
+
         return false;
     }
+    public void initData(ArrayList<CategoryGroupBean> groupList,
+
+                         ArrayList<ArrayList<CategoryChildBean>> childList) {
+
+        if(mGroupList!=null){
+
+            mGroupList.clear();
+
+        }
+
+        mGroupList.addAll(groupList);
+
+        if(mChildList!=null){
+
+            mChildList.clear();
+
+        }
+
+        mChildList.addAll(childList);
+
+        notifyDataSetChanged();
+    }
     class GroupViewHolder {
+
         @BindView(R.id.iv_group_thumb)
+
         ImageView mIvGroupThumb;
+
         @BindView(R.id.tv_group_name)
+
         TextView mTvGroupName;
+
         @BindView(R.id.iv_indicator)
+
         ImageView mIvIndicator;
         GroupViewHolder(View view) {
 
@@ -171,3 +262,4 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     }
 
 }
+

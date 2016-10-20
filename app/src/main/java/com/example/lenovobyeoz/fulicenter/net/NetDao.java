@@ -5,10 +5,13 @@ import android.content.Context;
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
+import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
+import com.example.lenovobyeoz.fulicenter.bean.CategoryGroupBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 public class NetDao {
+
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
         OkHttpUtils utils = new OkHttpUtils(context);
         utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
@@ -25,10 +28,17 @@ public class NetDao {
                 .targetClass(GoodsDetailsBean.class)
                 .execute(listener);
     }
-    public static void downloadBoutique(MainActivity context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener) {
+    public static void downloadCategoryGroup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener){
         OkHttpUtils utils = new OkHttpUtils(context);
-        utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
-                .targetClass(BoutiqueBean[].class)
+        utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
+                .targetClass(CategoryGroupBean[].class)
+                .execute(listener);
+    }
+    public static void downloadCategoryChild(Context context,int parentId, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
+        OkHttpUtils utils = new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
+                .addParam(I.CategoryChild.PARENT_ID,String.valueOf(parentId))
+                .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }
 }

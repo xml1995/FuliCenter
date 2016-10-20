@@ -6,7 +6,7 @@ import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 
 public class CommonUtils {
     public static void showLongToast(String msg){
-        Toast.makeText(FuLiCenterApplication.getInstance(),msg,Toast.LENGTH_LONG).show();
+        Toast.makeText( FuLiCenterApplication.getInstance(),msg,Toast.LENGTH_LONG).show();
     }
     public static void showShortToast(String msg){
         Toast.makeText(FuLiCenterApplication.getInstance(),msg,Toast.LENGTH_SHORT).show();

@@ -14,10 +14,10 @@ import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.view.FlowIndicator;
 import com.example.lenovobyeoz.fulicenter.view.SlideAutoLoopView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class GoodsDetailActivity extends BaseActivity {
     @BindView(R.id.backClickArea)
     LinearLayout mBackClickArea;
@@ -104,5 +104,4 @@ public class GoodsDetailActivity extends BaseActivity {
     public void onBackClick(){
         MFGT.finish(this);
     }
-
 }

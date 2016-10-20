@@ -1,4 +1,5 @@
 package com.example.lenovobyeoz.fulicenter.activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -302,6 +303,8 @@ public class CategoryChildActivity extends BaseActivity {
 
     public void onClick(View view) {
 
+        Drawable right;
+
         switch (view.getId()) {
 
             case R.id.btn_sort_price:
@@ -310,11 +313,19 @@ public class CategoryChildActivity extends BaseActivity {
 
                     sortBy = I.SORT_BY_PRICE_ASC;
 
+                    right = getResources().getDrawable(R.mipmap.arrow_order_up);
+
                 }else{
 
                     sortBy = I.SORT_BY_PRICE_DESC;
 
+                    right = getResources().getDrawable(R.mipmap.arrow_order_down);
+
                 }
+
+                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicHeight());
+
+                mBtnSortPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
 
                 priceAsc = !priceAsc;
 
@@ -326,14 +337,26 @@ public class CategoryChildActivity extends BaseActivity {
 
                     sortBy = I.SORT_BY_ADDTIME_ASC;
 
+                    right = getResources().getDrawable(R.mipmap.arrow_order_up);
+
                 }else{
 
                     sortBy = I.SORT_BY_ADDTIME_DESC;
 
+                    right = getResources().getDrawable(R.mipmap.arrow_order_down);
+
                 }
+
+                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicHeight());
+
+                mBtnSortAddtime.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+
                 addTimeAsc = !addTimeAsc;
+
                 break;
+
         }
+
         mAdapter.setSoryBy(sortBy);
 
     }

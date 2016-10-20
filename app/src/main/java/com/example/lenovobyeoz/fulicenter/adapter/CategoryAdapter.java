@@ -162,7 +162,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
 
-    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
+    public View getChildView(final int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
 
         ChildViewHolder holder;
 
@@ -194,7 +194,11 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
                 public void onClick(View view) {
 
-                    MFGT.gotoCategoryChildActivity(mContext,child.getId());
+                    ArrayList<CategoryChildBean> list = mChildList.get(groupPosition);
+
+                    String groupName = mGroupList.get(groupPosition).getName();
+
+                    MFGT.gotoCategoryChildActivity(mContext,child.getId(),groupName,list);
 
                 }
 
@@ -215,6 +219,8 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return false;
 
     }
+
+
 
     public void initData(ArrayList<CategoryGroupBean> groupList,
 
@@ -239,6 +245,9 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
 
     }
+
+
+
     class GroupViewHolder {
 
         @BindView(R.id.iv_group_thumb)
@@ -252,10 +261,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         @BindView(R.id.iv_indicator)
 
         ImageView mIvIndicator;
+
+
+
         GroupViewHolder(View view) {
+
             ButterKnife.bind(this, view);
+
         }
+
     }
+
+
 
     class ChildViewHolder {
 
@@ -270,6 +287,9 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         @BindView(R.id.layout_category_child)
 
         RelativeLayout mLayoutCategoryChild;
+
+
+
         ChildViewHolder(View view) {
 
             ButterKnife.bind(this, view);

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.adapter.GoodsAdapter;
+import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
@@ -18,6 +19,7 @@ import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.view.CatChildFilterButton;
 import com.example.lenovobyeoz.fulicenter.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -69,6 +71,14 @@ public class CategoryChildActivity extends BaseActivity {
 
     int sortBy = I.SORT_BY_ADDTIME_DESC;
 
+    @BindView(R.id.btnCatChildFilter)
+
+    CatChildFilterButton mBtnCatChildFilter;
+
+    String groupName;
+
+    ArrayList<CategoryChildBean> mChildList;
+
 
 
     @Override
@@ -92,6 +102,10 @@ public class CategoryChildActivity extends BaseActivity {
             finish();
 
         }
+
+        groupName = getIntent().getStringExtra(I.CategoryGroup.NAME);
+
+        mChildList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.ID);
 
         super.onCreate(savedInstanceState);
 
@@ -124,6 +138,8 @@ public class CategoryChildActivity extends BaseActivity {
         mRv.setAdapter(mAdapter);
 
         mRv.addItemDecoration(new SpaceItemDecoration(12));
+
+        mBtnCatChildFilter.setText(groupName);
 
     }
 
@@ -285,6 +301,8 @@ public class CategoryChildActivity extends BaseActivity {
 
         downloadCategoryGoods(I.ACTION_DOWNLOAD);
 
+        mBtnCatChildFilter.setOnCatFilterClickListener(groupName,mChildList);
+
     }
 
 
@@ -309,13 +327,13 @@ public class CategoryChildActivity extends BaseActivity {
 
             case R.id.btn_sort_price:
 
-                if(priceAsc){
+                if (priceAsc) {
 
                     sortBy = I.SORT_BY_PRICE_ASC;
 
                     right = getResources().getDrawable(R.mipmap.arrow_order_up);
 
-                }else{
+                } else {
 
                     sortBy = I.SORT_BY_PRICE_DESC;
 
@@ -323,9 +341,9 @@ public class CategoryChildActivity extends BaseActivity {
 
                 }
 
-                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicHeight());
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
 
-                mBtnSortPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+                mBtnSortPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
 
                 priceAsc = !priceAsc;
 
@@ -333,13 +351,13 @@ public class CategoryChildActivity extends BaseActivity {
 
             case R.id.btn_sort_addtime:
 
-                if(addTimeAsc){
+                if (addTimeAsc) {
 
                     sortBy = I.SORT_BY_ADDTIME_ASC;
 
                     right = getResources().getDrawable(R.mipmap.arrow_order_up);
 
-                }else{
+                } else {
 
                     sortBy = I.SORT_BY_ADDTIME_DESC;
 
@@ -347,9 +365,9 @@ public class CategoryChildActivity extends BaseActivity {
 
                 }
 
-                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicHeight());
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
 
-                mBtnSortAddtime.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+                mBtnSortAddtime.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
 
                 addTimeAsc = !addTimeAsc;
 

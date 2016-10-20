@@ -12,6 +12,7 @@ import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryGroupBean;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -179,7 +180,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
         }
 
-        CategoryChildBean child = getChild(groupPosition, childPosition);
+        final CategoryChildBean child = getChild(groupPosition, childPosition);
 
         if(child!=null){
 
@@ -187,16 +188,34 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
             holder.mTvCategoryChildName.setText(child.getName());
 
+            holder.mLayoutCategoryChild.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+
+                public void onClick(View view) {
+
+                    MFGT.gotoCategoryChildActivity(mContext,child.getId());
+
+                }
+
+            });
+
         }
 
         return view;
+
     }
+
+
+
     @Override
 
     public boolean isChildSelectable(int i, int i1) {
 
         return false;
+
     }
+
     public void initData(ArrayList<CategoryGroupBean> groupList,
 
                          ArrayList<ArrayList<CategoryChildBean>> childList) {
@@ -218,6 +237,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         mChildList.addAll(childList);
 
         notifyDataSetChanged();
+
     }
     class GroupViewHolder {
 
@@ -233,10 +253,10 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
         ImageView mIvIndicator;
         GroupViewHolder(View view) {
-
             ButterKnife.bind(this, view);
         }
     }
+
     class ChildViewHolder {
 
         @BindView(R.id.iv_category_child_thumb)
@@ -250,9 +270,6 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         @BindView(R.id.layout_category_child)
 
         RelativeLayout mLayoutCategoryChild;
-
-
-
         ChildViewHolder(View view) {
 
             ButterKnife.bind(this, view);
@@ -262,4 +279,3 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     }
 
 }
-

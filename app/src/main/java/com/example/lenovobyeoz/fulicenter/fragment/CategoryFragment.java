@@ -21,13 +21,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CategoryFragment extends BaseFragment {
+
+
+
     @BindView(R.id.elv_category)
+
     ExpandableListView mElvCategory;
+
+
+
     CategoryAdapter mAdapter;
+
     MainActivity mContext;
+
     ArrayList<CategoryGroupBean> mGroupList;
+
     ArrayList<ArrayList<CategoryChildBean>> mChildList;
+
+
+
     int groupCount;
+
+
+
     @Nullable
 
     @Override
@@ -49,7 +65,11 @@ public class CategoryFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         return layout;
+
     }
+
+
+
     @Override
 
     protected void initView() {
@@ -57,7 +77,11 @@ public class CategoryFragment extends BaseFragment {
         mElvCategory.setGroupIndicator(null);
 
         mElvCategory.setAdapter(mAdapter);
+
     }
+
+
+
     @Override
 
     protected void initData() {
@@ -65,7 +89,11 @@ public class CategoryFragment extends BaseFragment {
         downloadGroup();
 
     }
+
+
+
     private void downloadGroup() {
+
         NetDao.downloadCategoryGroup(mContext, new OkHttpUtils.OnCompleteListener<CategoryGroupBean[]>() {
 
             @Override
@@ -89,20 +117,29 @@ public class CategoryFragment extends BaseFragment {
                         CategoryGroupBean g = groupList.get(i);
 
                         downloadChild(g.getId(),i);
+
                     }
 
                 }
 
             }
+
+
+
             @Override
+
             public void onError(String error) {
 
                 L.e("error="+error);
+
             }
 
         });
 
     }
+
+
+
     private void downloadChild(int id,final int index) {
 
         NetDao.downloadCategoryChild(mContext, id, new OkHttpUtils.OnCompleteListener<CategoryChildBean[]>() {
@@ -124,10 +161,19 @@ public class CategoryFragment extends BaseFragment {
                     mChildList.set(index,childList);
 
                 }
+
                 if(groupCount==mGroupList.size()){
+
                     mAdapter.initData(mGroupList,mChildList);
+
                 }
+
+
+
             }
+
+
+
             @Override
 
             public void onError(String error) {
@@ -137,10 +183,15 @@ public class CategoryFragment extends BaseFragment {
             }
 
         });
+
     }
+
+
+
     @Override
 
     protected void setListener() {
+
     }
 
 }

@@ -1,4 +1,5 @@
 package com.example.lenovobyeoz.fulicenter.activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -84,6 +85,24 @@ public class LoginActivity extends BaseActivity {
                 MFGT.gotoRegister(this);
 
                 break;
+
+        }
+
+    }
+
+
+
+    @Override
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER){
+
+            String name = data.getStringExtra(I.User.USER_NAME);
+
+            mUsername.setText(name);
 
         }
 

@@ -1,6 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -8,6 +9,8 @@ import android.widget.EditText;
 import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
+import com.example.lenovobyeoz.fulicenter.utils.L;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.view.DisplayUtils;
 
@@ -60,7 +63,7 @@ public class RegisterActivity extends BaseActivity {
 
         setContentView(R.layout.activity_register);
 
-        ButtnerKnife.bind(this);
+        ButterKnife.bind(this);
 
         mContext = this;
 
@@ -193,6 +196,8 @@ public class RegisterActivity extends BaseActivity {
                     if(result.isRetMsg()){
 
                         CommonUtils.showLongToast(R.string.register_success);
+
+                        setResult(RESULT_OK,new Intent().putExtra(I.User.USER_NAME,username));
 
                         MFGT.finish(mContext);
 

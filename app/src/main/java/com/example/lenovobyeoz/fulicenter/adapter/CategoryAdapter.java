@@ -157,29 +157,16 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return view;
 
     }
-
-
-
     @Override
-
     public View getChildView(final int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
-
         ChildViewHolder holder;
-
         if (view == null) {
-
             view = View.inflate(mContext, R.layout.item_category_child, null);
-
             holder = new ChildViewHolder(view);
-
             view.setTag(holder);
-
         } else {
-
             holder = (ChildViewHolder) view.getTag();
-
         }
-
         final CategoryChildBean child = getChild(groupPosition, childPosition);
 
         if(child!=null){
@@ -199,13 +186,11 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
                     String groupName = mGroupList.get(groupPosition).getName();
 
                     MFGT.gotoCategoryChildActivity(mContext,child.getId(),groupName,list);
-
                 }
 
             });
 
         }
-
         return view;
 
     }
@@ -257,39 +242,19 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         @BindView(R.id.tv_group_name)
 
         TextView mTvGroupName;
-
         @BindView(R.id.iv_indicator)
-
         ImageView mIvIndicator;
-
-
-
         GroupViewHolder(View view) {
-
             ButterKnife.bind(this, view);
-
         }
-
     }
-
-
-
     class ChildViewHolder {
-
         @BindView(R.id.iv_category_child_thumb)
-
         ImageView mIvCategoryChildThumb;
-
         @BindView(R.id.tv_category_child_name)
-
         TextView mTvCategoryChildName;
-
         @BindView(R.id.layout_category_child)
-
         RelativeLayout mLayoutCategoryChild;
-
-
-
         ChildViewHolder(View view) {
 
             ButterKnife.bind(this, view);

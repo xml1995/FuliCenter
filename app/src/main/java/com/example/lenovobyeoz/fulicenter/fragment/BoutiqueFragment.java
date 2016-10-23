@@ -68,7 +68,7 @@ public class BoutiqueFragment extends BaseFragment {
         downLoadBoutique();
     }
     private void downLoadBoutique() {
-        NetDao.downloadBoutique( mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>(){
+        NetDao.downloadBuotique( mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>(){
             @Override
             public void onSuccess(BoutiqueBean[] result) {
                 mSrl.setRefreshing( false );

@@ -1,43 +1,26 @@
 package com.example.lenovobyeoz.fulicenter.view;
 import android.content.Context;
-
 import android.content.Intent;
-
 import android.graphics.Color;
-
 import android.graphics.drawable.ColorDrawable;
-
 import android.graphics.drawable.Drawable;
-
 import android.util.AttributeSet;
-
 import android.view.View;
-
 import android.view.ViewGroup;
-
 import android.widget.BaseAdapter;
-
 import android.widget.Button;
-
 import android.widget.GridView;
-
 import android.widget.ImageView;
-
 import android.widget.LinearLayout;
-
 import android.widget.PopupWindow;
-
 import android.widget.RelativeLayout;
-
 import android.widget.TextView;
-
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.CategoryChildActivity;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
-
 import java.util.ArrayList;
 
 /**
@@ -49,7 +32,6 @@ import java.util.ArrayList;
  *
 
  */
-
 public class CatChildFilterButton extends Button {
 
     Context mContext;
@@ -77,7 +59,6 @@ public class CatChildFilterButton extends Button {
     boolean mExpandOff;
 
 
-
     public CatChildFilterButton(Context context, AttributeSet attrs) {
 
         super(context, attrs);
@@ -90,25 +71,15 @@ public class CatChildFilterButton extends Button {
 
         initGridView();
 
-    }
+        }
 
 
 
-    private void initPopupWindow() {
+private void initPopupWindow() {
 
         mPopupWindow=new PopupWindow();
 
-        mPopupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-
-        if(mgvCategory.getAdapter().getCount()<16){
-
-            mPopupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        }else{
-
-            mPopupWindow.setHeight( ConvertUtils.px2dp(mContext, 200));
-
-        }
+        mPopupWindow.setWidth( LinearLayout.LayoutParams.MATCH_PARENT);
 
         mPopupWindow.setTouchable(true);
 
@@ -120,15 +91,15 @@ public class CatChildFilterButton extends Button {
 
         mPopupWindow.showAsDropDown(mbtnTop);
 
-    }
+        }
 
 
 
-    private void initGridView() {
+private void initGridView() {
 
         mgvCategory=new GridView(mContext);
 
-        mgvCategory.setColumnWidth(ConvertUtils.px2dp(mContext, 1500));
+        mgvCategory.setColumnWidth( ConvertUtils.px2dp(mContext, 1500));
 
         mgvCategory.setHorizontalSpacing(ConvertUtils.px2dp(mContext, 10));
 
@@ -142,21 +113,21 @@ public class CatChildFilterButton extends Button {
 
         mgvCategory.setCacheColorHint(0);
 
-    }
+        }
 
 
 
-    private void setBtnTopArrow() {
+private void setBtnTopArrow() {
 
         Drawable right=null;
 
         if(mExpandOff){
 
-            right=mContext.getResources().getDrawable( R.drawable.arrow2_down);
+        right=mContext.getResources().getDrawable(R.drawable.arrow2_down);
 
         }else{
 
-            right=mContext.getResources().getDrawable(R.drawable.arrow2_up);
+        right=mContext.getResources().getDrawable(R.drawable.arrow2_up);
 
         }
 
@@ -166,157 +137,157 @@ public class CatChildFilterButton extends Button {
 
         mExpandOff=!mExpandOff;
 
+        }
+
+
+
+/**
+
+ * 显示分类列表的适配器
+
+ * @author yao
+
+ *
+
+ */
+
+class CatFilterAdapter extends BaseAdapter {
+
+    Context context;
+
+    ArrayList<CategoryChildBean> Children;
+
+
+
+    public CatFilterAdapter(Context context,
+
+                            ArrayList<CategoryChildBean> list) {
+
+        super();
+
+        this.context = context;
+
+        this.Children = list;
+
     }
 
 
 
-    /**
+    @Override
 
-     * 显示分类列表的适配器
+    public int getCount() {
 
-     * @author yao
+        return Children==null?0:Children.size();
 
-     *
-
-     */
-
-    class CatFilterAdapter extends BaseAdapter {
-
-        Context context;
-
-        ArrayList<CategoryChildBean> Children;
+    }
 
 
 
-        public CatFilterAdapter(Context context,
+    @Override
 
-                                ArrayList<CategoryChildBean> list) {
+    public CategoryChildBean getItem(int position) {
 
-            super();
+        return Children.get(position);
 
-            this.context = context;
-
-            this.Children = list;
-
-        }
+    }
 
 
 
-        @Override
+    @Override
 
-        public int getCount() {
+    public long getItemId(int position) {
 
-            return Children==null?0:Children.size();
+        // TODO Auto-generated method stub
 
-        }
+        return 0;
 
-
-
-        @Override
-
-        public CategoryChildBean getItem(int position) {
-
-            return Children.get(position);
-
-        }
+    }
 
 
 
-        @Override
+    @Override
 
-        public long getItemId(int position) {
+    public View getView(int position, View layout, final ViewGroup parent) {
 
-            // TODO Auto-generated method stub
+        ViewChildHolder holder=null;
 
-            return 0;
+        if(layout==null){
+
+            layout= View.inflate(context, R.layout.item_cat_filter, null);
+
+            holder=new ViewChildHolder();
+
+            holder.layoutItem=(RelativeLayout) layout.findViewById(R.id.layout_category_child);
+
+            holder.ivThumb=(ImageView) layout.findViewById(R.id.ivCategoryChildThumb);
+
+            holder.tvChildName=(TextView) layout.findViewById(R.id.tvCategoryChildName);
+
+            layout.setTag(holder);
+
+        }else{
+
+            holder=(ViewChildHolder) layout.getTag();
 
         }
 
+        final CategoryChildBean child =getItem(position);
 
+        String name=child.getName();
 
-        @Override
+        holder.tvChildName.setText(name);
 
-        public View getView(int position, View layout, final ViewGroup parent) {
+        String imgUrl=child.getImageUrl();
 
-            ViewChildHolder holder=null;
-
-            if(layout==null){
-
-                layout= View.inflate(context, R.layout.item_cat_filter, null);
-
-                holder=new ViewChildHolder();
-
-                holder.layoutItem=(RelativeLayout) layout.findViewById(R.id.layout_category_child);
-
-                holder.ivThumb=(ImageView) layout.findViewById(R.id.ivCategoryChildThumb);
-
-                holder.tvChildName=(TextView) layout.findViewById(R.id.tvCategoryChildName);
-
-                layout.setTag(holder);
-
-            }else{
-
-                holder=(ViewChildHolder) layout.getTag();
-
-            }
-
-            final CategoryChildBean child =getItem(position);
-
-            String name=child.getName();
-
-            holder.tvChildName.setText(name);
-
-            String imgUrl=child.getImageUrl();
-
-            ImageLoader.downloadImg(context,holder.ivThumb,imgUrl);
+        ImageLoader.downloadImg(context,holder.ivThumb,imgUrl);
 
 
 
-            holder.layoutItem.setOnClickListener(new OnClickListener() {
+        holder.layoutItem.setOnClickListener(new View.OnClickListener() {
 
-                @Override
+            @Override
 
-                public void onClick(View v) {
+            public void onClick(View v) {
 
-                    if(mPopupWindow.isShowing()){
+                if(mPopupWindow.isShowing()){
 
-                        mPopupWindow.dismiss();
-
-                    }
-
-                    Intent intent=new Intent(mContext, CategoryChildActivity.class);
-
-                    intent.putExtra(I.CategoryChild.CAT_ID, child.getId());
-
-                    intent.putExtra("childList", Children);
-
-                    intent.putExtra( I.CategoryGroup.NAME, mbtnTop.getText().toString());
-
-                    mContext.startActivity(intent);
-
-                    ((CategoryChildActivity)mContext).finish();
+                    mPopupWindow.dismiss();
 
                 }
 
-            });
+                Intent intent=new Intent(mContext, CategoryChildActivity.class);
 
-            return layout;
+                intent.putExtra(I.CategoryChild.CAT_ID, child.getId());
 
-        }
+                intent.putExtra(I.CategoryChild.ID, Children);
 
+                intent.putExtra(I.CategoryGroup.NAME, mbtnTop.getText().toString());
 
+                mContext.startActivity(intent);
 
-        class ViewChildHolder{
+                ((CategoryChildActivity)mContext).finish();
 
-            RelativeLayout layoutItem;
+            }
 
-            ImageView ivThumb;
+        });
 
-            TextView tvChildName;
-
-        }
+        return layout;
 
     }
+
+
+
+    class ViewChildHolder{
+
+        RelativeLayout layoutItem;
+
+        ImageView ivThumb;
+
+        TextView tvChildName;
+
+    }
+
+}
 
 
 
@@ -334,7 +305,7 @@ public class CatChildFilterButton extends Button {
 
                                             final ArrayList<CategoryChildBean> childList){
 
-        mbtnTop.setOnClickListener(new OnClickListener() {
+        mbtnTop.setOnClickListener(new View.OnClickListener() {
 
             @Override
 

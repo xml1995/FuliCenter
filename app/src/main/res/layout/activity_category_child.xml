@@ -63,7 +63,7 @@
 
             android:layout_marginRight="10dp"
 
-            android:drawableRight="@drawable/arrow2_up"
+            android:drawableRight="@drawable/arrow_up"
 
             android:background="@null"
 

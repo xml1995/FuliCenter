@@ -10,9 +10,6 @@
               android:orientation="vertical" >
 
     <include layout="@layout/common_head_title_white"/>
-
-
-
     <RelativeLayout
 
         android:layout_width="match_parent"
@@ -55,7 +52,7 @@
 
                 android:layout_marginRight="10dip"
 
-                android:src="@drawable/._icon_account" />
+                android:src="@drawable/icon_account" />
 
 
 
@@ -119,7 +116,7 @@
 
                 android:layout_marginRight="10dip"
 
-                android:src="@drawable/._icon_pwd" />
+                android:src="@drawable/icon_pwd" />
 
 
 

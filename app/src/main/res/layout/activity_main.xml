@@ -86,7 +86,7 @@
         android:id="@+id/vline"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_above="@id/main_bottom"
+        android:layout_above="@+id/main_bottom"
         android:background="#D6DCDC"  />
 
     <RelativeLayout
@@ -94,6 +94,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="1dp"
-        android:layout_above="@id/vline" />
+        android:layout_above="@+id/vline" />
 
 </RelativeLayout>

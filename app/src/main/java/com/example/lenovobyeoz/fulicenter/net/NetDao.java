@@ -12,6 +12,8 @@ import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
 import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.utils.MD5;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+
+
 public class NetDao {
 
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
@@ -129,6 +131,24 @@ public class NetDao {
                 .targetClass(Result.class)
 
                 .post()
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<Result> listener){
+
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+
+                .addParam(I.User.USER_NAME,username)
+
+                .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
+
+                .targetClass(Result.class)
 
                 .execute(listener);
 

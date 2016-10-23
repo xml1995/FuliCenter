@@ -9,12 +9,14 @@ import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryGroupBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;
+import com.example.lenovobyeoz.fulicenter.bean.Result;
+import com.example.lenovobyeoz.fulicenter.utils.MD5;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 public class NetDao {
 
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
 
@@ -34,7 +36,7 @@ public class NetDao {
 
     public static void downloadGoodsDetail(Context context, int goodsId, OkHttpUtils.OnCompleteListener<GoodsDetailsBean> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<GoodsDetailsBean> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
 
@@ -50,7 +52,7 @@ public class NetDao {
 
     public static void downloadBuotique(Context context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<BoutiqueBean[]> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
 
@@ -64,7 +66,7 @@ public class NetDao {
 
     public static void downloadCategoryGroup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<CategoryGroupBean[]> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
 
@@ -78,7 +80,7 @@ public class NetDao {
 
     public static void downloadCategoryChild(Context context,int parentId, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<CategoryChildBean[]> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
 
@@ -89,9 +91,12 @@ public class NetDao {
                 .execute(listener);
 
     }
+
+
+
     public static void downloadCategoryGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
 
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
 
         utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS)
 
@@ -102,6 +107,28 @@ public class NetDao {
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
 
                 .targetClass(NewGoodsBean[].class)
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void register(Context context, String username, String nickname, String password, OkHttpUtils.OnCompleteListener<Result> listener){
+
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_REGISTER)
+
+                .addParam(I.User.USER_NAME,username)
+
+                .addParam(I.User.NICK,nickname)
+
+                .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+
+                .targetClass(Result.class)
+
+                .post()
 
                 .execute(listener);
 

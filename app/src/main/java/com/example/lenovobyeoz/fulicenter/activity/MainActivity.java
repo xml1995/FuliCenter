@@ -5,15 +5,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.fragment.BoutiqueFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.CategoryFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.NewGoodsFragment;
 import com.example.lenovobyeoz.fulicenter.utils.L;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
+
+
+
     @BindView(R.id.layout_new_good)
 
     RadioButton mLayoutNewGood;
@@ -37,14 +44,27 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.layout_personal_center)
 
     RadioButton mLayoutPersonalCenter;
+
+
+
     int index;
+
     int currentIndex;
+
     RadioButton[] rbs;
+
     Fragment[] mFragments;
+
     NewGoodsFragment mNewGoodsFragment;
+
     BoutiqueFragment mBoutiqueFragment;
+
     CategoryFragment mCategoryFragment;
+
+
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.activity_main);
@@ -54,7 +74,11 @@ public class MainActivity extends BaseActivity {
         L.i("MainActivity onCreate");
 
         super.onCreate(savedInstanceState);
+
     }
+
+
+
     private void initFragment() {
 
         mFragments = new Fragment[5];
@@ -88,8 +112,13 @@ public class MainActivity extends BaseActivity {
                 .show(mNewGoodsFragment)
 
                 .commit();
+
     }
+
+
+
     @Override
+
     protected void initView() {
 
         rbs = new RadioButton[5];
@@ -103,36 +132,81 @@ public class MainActivity extends BaseActivity {
         rbs[3] = mLayoutCart;
 
         rbs[4] = mLayoutPersonalCenter;
+
     }
+
+
+
     @Override
 
     protected void initData() {
 
         initFragment();
+
     }
+
+
+
     @Override
+
     protected void setListener() {
+
+
+
     }
+
+
+
     public void onCheckedChange(View v) {
+
         switch (v.getId()){
+
             case R.id.layout_new_good:
+
                 index = 0;
+
                 break;
+
             case R.id.layout_boutique:
+
                 index = 1;
+
                 break;
+
             case R.id.layout_category:
+
                 index = 2;
+
                 break;
+
             case R.id.layout_cart:
+
                 index = 3;
+
                 break;
+
             case R.id.layout_personal_center:
-                index = 4;
+
+                if(FuLiCenterApplication.getUsername()==null){
+
+                    MFGT.gotoLogin(this);
+
+                }else {
+
+                    index = 4;
+
+                }
+
                 break;
+
         }
+
         setFragment();
+
     }
+
+
+
     private void setFragment() {
 
         if(index!=currentIndex) {
@@ -144,12 +218,21 @@ public class MainActivity extends BaseActivity {
             if(!mFragments[index].isAdded()){
 
                 ft.add(R.id.fragment_container,mFragments[index]);
+
             }
+
             ft.show(mFragments[index]).commit();
+
         }
+
         setRadioButtonStatus();
+
         currentIndex = index;
+
     }
+
+
+
     private void setRadioButtonStatus() {
 
         L.e("index="+index);

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.I;
-import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.adapter.GoodsAdapter;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
 import com.example.lenovobyeoz.fulicenter.bean.NewGoodsBean;

@@ -3,7 +3,6 @@
     package="com.example.lenovobyeoz.fulicenter">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
 
         android:name=".FuLiCenterApplication"
@@ -25,7 +24,11 @@
         <activity android:name=".activity.SplashActivity">
 
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN"/>
+
+
+
                 <category android:name="android.intent.category.LAUNCHER"/>
 
             </intent-filter>
@@ -41,6 +44,14 @@
         </activity>
 
         <activity android:name=".activity.CategoryChildActivity">
+
+        </activity>
+
+        <activity android:name=".activity.LoginActivity">
+
+        </activity>
+
+        <activity android:name=".activity.RegisterActivity">
 
         </activity>
 

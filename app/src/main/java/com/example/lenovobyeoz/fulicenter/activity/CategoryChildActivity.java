@@ -28,9 +28,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CategoryChildActivity extends BaseActivity {
-
-
-
     @BindView(R.id.tv_refresh)
 
     TextView mTvRefresh;

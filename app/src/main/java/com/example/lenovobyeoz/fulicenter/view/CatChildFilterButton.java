@@ -123,11 +123,11 @@ private void setBtnTopArrow() {
 
         if(mExpandOff){
 
-        right=mContext.getResources().getDrawable(R.drawable.arrow2_down);
+        right=mContext.getResources().getDrawable(R.drawable.arrow_down );
 
         }else{
 
-        right=mContext.getResources().getDrawable(R.drawable.arrow2_up);
+        right=mContext.getResources().getDrawable(R.drawable.arrow_up );
 
         }
 

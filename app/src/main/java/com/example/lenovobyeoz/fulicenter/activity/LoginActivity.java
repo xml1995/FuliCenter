@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.bean.User;
+import com.example.lenovobyeoz.fulicenter.dao.UserDao;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
+import com.example.lenovobyeoz.fulicenter.utils.SharePrefrenceUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -179,7 +183,23 @@ public class LoginActivity extends BaseActivity {
 
                         L.e(TAG,"user="+user);
 
-                        MFGT.finish(mContext);
+                        UserDao dao = new UserDao(mContext);
+
+                        boolean isSuccess = dao.saveUser(user);
+
+                        if(isSuccess){
+
+                            SharePrefrenceUtils.getInstence(mContext).saveUser(user.getMuserName());
+
+                            FuLiCenterApplication.setUser(user);
+
+                            MFGT.finish(mContext);
+
+                        }else{
+
+                            CommonUtils.showLongToast(R.string.user_database_error);
+
+                        }
 
                     }else{
 

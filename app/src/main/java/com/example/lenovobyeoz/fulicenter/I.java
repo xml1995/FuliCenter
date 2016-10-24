@@ -1,6 +1,5 @@
 package com.example.lenovobyeoz.fulicenter;
 
-
 public interface I {
 
     String SERVER_ROOT = "http://101.251.196.90:8000/FuLiCenterServerV2.0/";
@@ -36,6 +35,8 @@ public interface I {
 
 
     int REQUEST_CODE_REGISTER = 101;
+
+    int REQUEST_CODE_LOGIN = 102;
 
 
 
@@ -655,6 +656,8 @@ public interface I {
 
     String AVATAR_TYPE = "avatarType";
 
+    String AVATAR_SUFFIX = "m_avatar_suffix";
+
     /** 用户的账号或群组的环信id */
 
     String NAME_OR_HXID = "name_or_hxid";
@@ -834,5 +837,9 @@ public interface I {
             REQUEST_DOWNLOAD_IMAGE+I.QUESTION+ IMAGE_URL+"=";
 
 
+
+    String DOWNLOAD_AVATAR_URL = I.SERVER_ROOT +
+
+            REQUEST_DOWNLOAD_AVATAR + I.QUESTION;
 
 }

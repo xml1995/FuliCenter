@@ -3,6 +3,7 @@ package com.example.lenovobyeoz.fulicenter.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 public class SplashActivity extends AppCompatActivity {

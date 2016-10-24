@@ -1,6 +1,4 @@
 package com.example.lenovobyeoz.fulicenter.adapter;
-
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;

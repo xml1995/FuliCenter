@@ -1,13 +1,21 @@
 package com.example.lenovobyeoz.fulicenter.activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.bean.Result;
+import com.example.lenovobyeoz.fulicenter.bean.User;
+import com.example.lenovobyeoz.fulicenter.net.NetDao;
+import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
+import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -149,13 +157,13 @@ public class LoginActivity extends BaseActivity {
 
         L.e(TAG,"username="+username+",password="+password);
 
-        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
 
             @Override
 
-            public void onSuccess(Result result) {
+            public void onSuccess(String s) {
 
-                pd.dismiss();
+                Result result = ResultUtils.getResultFromJson(s,User.class);
 
                 L.e(TAG,"result="+result);
 
@@ -193,6 +201,8 @@ public class LoginActivity extends BaseActivity {
 
                 }
 
+                pd.dismiss();
+
             }
 
 
@@ -223,7 +233,7 @@ public class LoginActivity extends BaseActivity {
 
         if(resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER){
 
-            String name = data.getStringExtra( I.User.USER_NAME);
+            String name = data.getStringExtra(I.User.USER_NAME);
 
             mUsername.setText(name);
 

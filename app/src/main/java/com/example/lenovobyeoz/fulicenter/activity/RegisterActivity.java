@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.lenovobyeoz.fulicenter.I;
+import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
@@ -15,48 +18,26 @@ import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.view.DisplayUtils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends BaseActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
-
-
-
     @BindView(R.id.username)
-
     EditText mUsername;
-
     @BindView(R.id.nick)
-
     EditText mNick;
-
     @BindView(R.id.password)
-
     EditText mPassword;
-
     @BindView(R.id.confirm_password)
-
     EditText mConfirmPassword;
-
     @BindView(R.id.btn_register)
-
     Button mBtnRegister;
-
-
-
-
-
     String username;
-
     String nickname;
-
     String password;
-
     RegisterActivity mContext;
-
-
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +82,6 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-
-
     @OnClick(R.id.btn_register)
 
     public void checkedInput() {
@@ -125,9 +104,9 @@ public class RegisterActivity extends BaseActivity {
 
         }else if(!username.matches("[a-zA-Z]\\w{5,15}")){
 
-            CommonUtils.showShortToast(R.string.illegal_user_name);
+          CommonUtils.showShortToast(R.string.illegal_user_name);
 
-            mUsername.requestFocus();
+          mUsername.requestFocus();
 
             return;
 
@@ -166,12 +145,8 @@ public class RegisterActivity extends BaseActivity {
         }
 
         register();
-
     }
-
-
-
-    private void register() {
+  private void register() {
 
         final ProgressDialog pd = new ProgressDialog(mContext);
 
@@ -197,7 +172,7 @@ public class RegisterActivity extends BaseActivity {
 
                         CommonUtils.showLongToast(R.string.register_success);
 
-                        setResult(RESULT_OK,new Intent().putExtra(I.User.USER_NAME,username));
+                        setResult(RESULT_OK,new Intent().putExtra( I.User.USER_NAME,username));
 
                         MFGT.finish(mContext);
 
@@ -224,7 +199,6 @@ public class RegisterActivity extends BaseActivity {
                 CommonUtils.showShortToast(error);
 
                 L.e(TAG,"register error="+error);
-
             }
 
         });

@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -353,7 +354,7 @@ public class ImageLoader {
 
     public static void setImage(String url,Context context,ImageView imageView,boolean isDragging){
         ImageLoader.build(url)
-                .defaultPicture(R.drawable.nopic)
+                .defaultPicture( R.drawable.nopic)
                 .imageView(imageView)
                 .setDragging(isDragging)
                 .showImage(context);

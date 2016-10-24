@@ -100,8 +100,8 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected  void initView() {
     }
-    @OnClick(R.id.backClickArea)
-    public void onBackClick(){
-        MFGT.finish(this);
-    }
+//    @OnClick(R.id.backClickArea)
+//    public void onBackClick(){
+//        MFGT.finish(this);
+//    }
 }

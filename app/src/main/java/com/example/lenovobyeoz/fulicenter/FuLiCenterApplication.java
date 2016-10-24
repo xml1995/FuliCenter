@@ -34,23 +34,14 @@ public class FuLiCenterApplication extends Application {
         if(instance==null){
 
             instance = new FuLiCenterApplication();
-
         }
-
         return instance;
-
     }
-
-
-
     public static String getUsername() {
 
         return username;
 
     }
-
-
-
     public static void setUsername(String username) {
 
         FuLiCenterApplication.username = username;

@@ -90,7 +90,7 @@
 
             android:layout_height="54dp"
 
-            android:layout_below="@id/rl_username"
+            android:layout_below="@+id/rl_username"
 
             android:layout_marginLeft="28dp"
 
@@ -152,7 +152,7 @@
 
             android:layout_height="wrap_content"
 
-            android:layout_below="@id/rl_password"
+            android:layout_below="@+id/rl_password"
 
             android:layout_marginLeft="30dp"
 
@@ -212,7 +212,7 @@
 
                 android:layout_weight="1"
 
-                android:background="@drawable/tb_regiser_bg"
+                android:background="@drawable/tb_register_bg"
 
                 android:gravity="center"
 

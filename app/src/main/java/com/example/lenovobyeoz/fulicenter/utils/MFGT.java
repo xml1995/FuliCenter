@@ -20,7 +20,7 @@ public class MFGT {
 
         activity.finish();
 
-        activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        activity.overridePendingTransition( R.anim.push_right_in,R.anim.push_right_out);
 
     }
 

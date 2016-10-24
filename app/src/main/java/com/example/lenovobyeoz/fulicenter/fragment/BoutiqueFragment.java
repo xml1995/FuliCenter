@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.adapter.BoutiqueAdapter;
@@ -44,7 +45,7 @@ public class BoutiqueFragment extends BaseFragment {
         mList=new ArrayList<>();
         mAdapter=new BoutiqueAdapter(mContext,mList);
         super.onCreateView(inflater,container,savedInstanceState);
-        return layout;
+       return layout;
     }
     @Override
     protected void setListener() {

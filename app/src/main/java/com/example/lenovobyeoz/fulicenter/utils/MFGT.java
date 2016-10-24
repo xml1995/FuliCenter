@@ -20,7 +20,7 @@ public class MFGT {
 
         activity.finish();
 
-        activity.overridePendingTransition( R.anim.push_right_in,R.anim.push_right_out);
+        activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 
     }
 
@@ -104,7 +104,11 @@ public class MFGT {
 
     public static void gotoLogin(Activity context){
 
-        startActivity(context, LoginActivity.class);
+        Intent intent = new Intent();
+
+        intent.setClass(context,LoginActivity.class);
+
+        startActivityForResult(context,intent,I.REQUEST_CODE_LOGIN);
 
     }
 

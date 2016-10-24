@@ -11,6 +11,7 @@ import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.fragment.BoutiqueFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.CategoryFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.NewGoodsFragment;
+import com.example.lenovobyeoz.fulicenter.fragment.PersonalCenterFragment;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 
@@ -61,6 +62,8 @@ public class MainActivity extends BaseActivity {
 
     CategoryFragment mCategoryFragment;
 
+    PersonalCenterFragment mPersonalCenterFragment;
+
 
 
     @Override
@@ -89,11 +92,15 @@ public class MainActivity extends BaseActivity {
 
         mCategoryFragment = new CategoryFragment();
 
+        mPersonalCenterFragment = new PersonalCenterFragment();
+
         mFragments[0] = mNewGoodsFragment;
 
         mFragments[1] = mBoutiqueFragment;
 
         mFragments[2] = mCategoryFragment;
+
+        mFragments[4] = mPersonalCenterFragment;
 
         getSupportFragmentManager()
 
@@ -187,7 +194,7 @@ public class MainActivity extends BaseActivity {
 
             case R.id.layout_personal_center:
 
-                if(FuLiCenterApplication.getUsername()==null){
+                if(FuLiCenterApplication.getUser()==null){
 
                     MFGT.gotoLogin(this);
 

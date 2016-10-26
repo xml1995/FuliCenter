@@ -471,9 +471,6 @@ public class ImageLoader {
         return null;
 
     }
-
-
-
     /**
 
      * 则设置图片下载后主线程默认的图片显示代码->mOnImageLoadListener

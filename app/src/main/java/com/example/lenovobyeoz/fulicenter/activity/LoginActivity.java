@@ -20,6 +20,7 @@ import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 import com.example.lenovobyeoz.fulicenter.utils.SharePrefrenceUtils;
+import com.example.lenovobyeoz.fulicenter.view.DisplayUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +70,7 @@ public class LoginActivity extends BaseActivity {
 
     protected void initView() {
 
-
+        DisplayUtils.initBackWithTitle(mContext,getResources().getString(R.string.login));
 
     }
 
@@ -236,29 +237,15 @@ public class LoginActivity extends BaseActivity {
                 CommonUtils.showLongToast(error);
 
                 L.e(TAG,"error="+error);
-
             }
-
         });
-
     }
-
-
-
     @Override
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-
         if(resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER){
-
             String name = data.getStringExtra(I.User.USER_NAME);
-
             mUsername.setText(name);
-
         }
-
     }
-
 }

@@ -5,6 +5,8 @@
 
                 android:layout_height="40dp"
 
+                android:id="@+id/common_head_title"
+
                 android:background="@color/white">
 
     <LinearLayout

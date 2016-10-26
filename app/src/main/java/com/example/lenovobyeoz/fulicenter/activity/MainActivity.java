@@ -280,6 +280,12 @@ public class MainActivity extends BaseActivity {
 
         L.e(TAG,"onResume...");
 
+        if(index == 4 && FuLiCenterApplication.getUser()==null){
+
+            index = 0;
+
+        }
+
         setFragment();
 
     }

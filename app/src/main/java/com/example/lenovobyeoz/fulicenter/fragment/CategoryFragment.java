@@ -100,13 +100,9 @@ public class CategoryFragment extends BaseFragment {
 
             public void onSuccess(CategoryGroupBean[] result) {
 
-                L.e("downloadGroup,result="+result);
-
                 if(result!=null && result.length>0){
 
                     ArrayList<CategoryGroupBean> groupList = ConvertUtils.array2List(result);
-
-                    L.e("groupList="+groupList.size());
 
                     mGroupList.addAll(groupList);
 
@@ -150,13 +146,9 @@ public class CategoryFragment extends BaseFragment {
 
                 groupCount++;
 
-                L.e("downloadChild,result="+result);
-
                 if(result!=null && result.length>0) {
 
                     ArrayList<CategoryChildBean> childList = ConvertUtils.array2List(result);
-
-                    L.e("childList="+childList.size());
 
                     mChildList.set(index,childList);
 

@@ -10,6 +10,8 @@ import com.example.lenovobyeoz.fulicenter.activity.GoodsDetailActivity;
 import com.example.lenovobyeoz.fulicenter.activity.LoginActivity;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.activity.RegisterActivity;
+import com.example.lenovobyeoz.fulicenter.activity.UpdateNickActivity;
+import com.example.lenovobyeoz.fulicenter.activity.UserProfileActivity;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import java.util.ArrayList;
@@ -133,6 +135,22 @@ public class MFGT {
         context.startActivityForResult(intent,requestCode);
 
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+
+    }
+
+
+
+    public static void gotoSettings(Activity context){
+
+        startActivity(context, UserProfileActivity.class);
+
+    }
+
+
+
+    public static void gotoUpdateNick(Activity context){
+
+        startActivityForResult(context,new Intent(context, UpdateNickActivity.class),I.REQUEST_CODE_NICK);
 
     }
 

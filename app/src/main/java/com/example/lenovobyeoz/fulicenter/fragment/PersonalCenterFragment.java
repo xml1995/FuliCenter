@@ -26,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
+
 public class PersonalCenterFragment extends BaseFragment {
 
     private static final String TAG = PersonalCenterFragment.class.getSimpleName();
@@ -45,6 +47,8 @@ public class PersonalCenterFragment extends BaseFragment {
     @BindView(R.id.center_user_order_lis)
 
     GridView mCenterUserOrderLis;
+
+    User user = null;
 
 
 
@@ -82,7 +86,7 @@ public class PersonalCenterFragment extends BaseFragment {
 
     protected void initData() {
 
-        User user = FuLiCenterApplication.getUser();
+        user = FuLiCenterApplication.getUser();
 
         L.e(TAG, "user=" + user);
 
@@ -112,9 +116,33 @@ public class PersonalCenterFragment extends BaseFragment {
 
 
 
-    @OnClick(R.id.tv_center_settings)
+    @Override
 
-    public void onClick() {
+    public void onResume() {
+
+        super.onResume();
+
+        user = FuLiCenterApplication.getUser();
+
+        L.e(TAG, "user=" + user);
+
+        if (user != null) {
+
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
+
+            mTvUserName.setText(user.getMuserNick());
+
+        }
+
+    }
+
+
+
+    @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+
+    public void gotoSettings() {
+
+        MFGT.gotoSettings(mContext);
 
     }
 

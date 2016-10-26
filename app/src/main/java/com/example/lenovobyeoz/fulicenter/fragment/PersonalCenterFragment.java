@@ -155,6 +155,16 @@ public class PersonalCenterFragment extends BaseFragment {
 
 
 
+    @OnClick(R.id.layout_center_collect)
+
+    public void gotoCollectsList(){
+
+        MFGT.gotoCollects(mContext);
+
+    }
+
+
+
     private void initOrderList() {
 
         ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
@@ -265,7 +275,7 @@ public class PersonalCenterFragment extends BaseFragment {
 
                     mTvCollectCount.setText(result.getMsg());
 
-                }else{
+                } else {
 
                     mTvCollectCount.setText(String.valueOf(0));
 
@@ -281,7 +291,7 @@ public class PersonalCenterFragment extends BaseFragment {
 
                 mTvCollectCount.setText(String.valueOf(0));
 
-                L.e(TAG,"error="+error);
+                L.e(TAG, "error=" + error);
 
             }
 

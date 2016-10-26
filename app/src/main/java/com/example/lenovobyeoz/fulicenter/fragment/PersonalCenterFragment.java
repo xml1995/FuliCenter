@@ -1,8 +1,6 @@
 package com.example.lenovobyeoz.fulicenter.fragment;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +8,25 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
+import com.example.lenovobyeoz.fulicenter.bean.MessageBean;
+import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.bean.User;
+import com.example.lenovobyeoz.fulicenter.dao.UserDao;
+import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-
-
 public class PersonalCenterFragment extends BaseFragment {
 
     private static final String TAG = PersonalCenterFragment.class.getSimpleName();
@@ -49,6 +48,10 @@ public class PersonalCenterFragment extends BaseFragment {
     GridView mCenterUserOrderLis;
 
     User user = null;
+
+    @BindView(R.id.tv_collect_count)
+
+    TextView mTvCollectCount;
 
 
 
@@ -132,13 +135,17 @@ public class PersonalCenterFragment extends BaseFragment {
 
             mTvUserName.setText(user.getMuserNick());
 
+            syncUserInfo();
+
+            syncCollectsCount();
+
         }
 
     }
 
 
 
-    @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+    @OnClick({R.id.tv_center_settings, R.id.center_user_info})
 
     public void gotoSettings() {
 
@@ -187,6 +194,98 @@ public class PersonalCenterFragment extends BaseFragment {
                 new String[]{"order"}, new int[]{R.id.iv_order});
 
         mCenterUserOrderLis.setAdapter(adapter);
+
+    }
+
+
+
+    private void syncUserInfo() {
+
+        NetDao.syncUserInfo(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<String>() {
+
+            @Override
+
+            public void onSuccess(String s) {
+
+                Result result = ResultUtils.getResultFromJson(s, User.class);
+
+                if (result != null) {
+
+                    User u = (User) result.getRetData();
+
+                    if (!user.equals(u)) {
+
+                        UserDao dao = new UserDao(mContext);
+
+                        boolean b = dao.saveUser(u);
+
+                        if (b) {
+
+                            FuLiCenterApplication.setUser(u);
+
+                            user = u;
+
+                            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
+
+                            mTvUserName.setText(user.getMuserNick());
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+
+            @Override
+
+            public void onError(String error) {
+
+
+
+            }
+
+        });
+
+    }
+
+
+
+    private void syncCollectsCount() {
+
+        NetDao.getCollectsCount(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+
+            @Override
+
+            public void onSuccess(MessageBean result) {
+
+                if (result != null && result.isSuccess()) {
+
+                    mTvCollectCount.setText(result.getMsg());
+
+                }else{
+
+                    mTvCollectCount.setText(String.valueOf(0));
+
+                }
+
+            }
+
+
+
+            @Override
+
+            public void onError(String error) {
+
+                mTvCollectCount.setText(String.valueOf(0));
+
+                L.e(TAG,"error="+error);
+
+            }
+
+        });
 
     }
 

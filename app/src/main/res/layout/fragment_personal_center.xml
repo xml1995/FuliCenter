@@ -203,7 +203,7 @@
 
                                 android:layout_gravity="center"
 
-                                android:text="180"
+                                android:text="0"
 
                                 android:textColor="@color/white" />
 

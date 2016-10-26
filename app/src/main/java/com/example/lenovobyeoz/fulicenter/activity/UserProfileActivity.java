@@ -1,6 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.activity;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +11,20 @@ import android.widget.TextView;
 import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.bean.User;
+import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.OnSetAvatarListener;
+import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 import com.example.lenovobyeoz.fulicenter.utils.SharePrefrenceUtils;
 import com.example.lenovobyeoz.fulicenter.view.DisplayUtils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +52,8 @@ public class UserProfileActivity extends BaseActivity {
 
     User user = null;
 
+    OnSetAvatarListener mOnSetAvatarListener;
+
 
 
     @Override
@@ -58,9 +69,6 @@ public class UserProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
     }
-
-
-
     @Override
 
     protected void initView() {
@@ -108,6 +116,10 @@ public class UserProfileActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.layout_user_profile_avatar:
+
+                mOnSetAvatarListener = new OnSetAvatarListener(mContext,R.id.layout_upload_avatar,
+
+                        user.getMuserName(),I.AVATAR_TYPE_USER_PATH);
 
                 break;
 
@@ -171,11 +183,102 @@ public class UserProfileActivity extends BaseActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK&&requestCode== I.REQUEST_CODE_NICK){
+        L.e("onActivityResult,requestCode="+requestCode+",resultCode="+resultCode);
+
+        if(resultCode!=RESULT_OK){
+
+            return;
+
+        }
+
+        mOnSetAvatarListener.setAvatar(requestCode,data,mIvUserProfileAvatar);
+
+        if(requestCode== I.REQUEST_CODE_NICK){
 
             CommonUtils.showLongToast(R.string.update_user_nick_success);
 
         }
+
+        if(requestCode==OnSetAvatarListener.REQUEST_CROP_PHOTO){
+
+            updateAvatar();
+
+        }
+
+    }
+    private void updateAvatar() {
+
+        File file = new File(OnSetAvatarListener.getAvatarPath(mContext,
+
+                user.getMavatarPath()+"/"+user.getMuserName()
+
+                        +I.AVATAR_SUFFIX_JPG));
+
+        L.e("file="+file.exists());
+
+        L.e("file="+file.getAbsolutePath());
+
+        final ProgressDialog pd = new ProgressDialog(mContext);
+
+        pd.setMessage(getResources().getString(R.string.update_user_avatar));
+
+        pd.show();
+
+        NetDao.updateAvatar(mContext, user.getMuserName(), file, new OkHttpUtils.OnCompleteListener<String>() {
+
+            @Override
+
+            public void onSuccess(String s) {
+
+                L.e("s="+s);
+
+                Result result = ResultUtils.getResultFromJson(s,User.class);
+
+                L.e("result="+result);
+
+                if(result==null){
+
+                    CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+
+                }else{
+
+                    User u = (User) result.getRetData();
+
+                    if(result.isRetMsg()){
+
+                        FuLiCenterApplication.setUser(u);
+
+                        ImageLoader.setAvatar(ImageLoader.getAvatarUrl(u),mContext,mIvUserProfileAvatar);
+
+                        CommonUtils.showLongToast(R.string.update_user_avatar_success);
+
+                    }else{
+
+                        CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+
+                    }
+
+                }
+
+                pd.dismiss();
+
+            }
+
+
+
+            @Override
+
+            public void onError(String error) {
+
+                pd.dismiss();
+
+                CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+
+                L.e("error="+error);
+
+            }
+
+        });
 
     }
 

@@ -12,6 +12,8 @@ import com.example.lenovobyeoz.fulicenter.bean.Result;
 import com.example.lenovobyeoz.fulicenter.utils.MD5;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 
+import java.io.File;
+
 public class NetDao {
 
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
@@ -165,6 +167,28 @@ public class NetDao {
                 .addParam(I.User.NICK,nick)
 
                 .targetClass(String.class)
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void updateAvatar(Context context, String username, File file, OkHttpUtils.OnCompleteListener<String> listener){
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_UPDATE_AVATAR)
+
+                .addParam(I.NAME_OR_HXID,username)
+
+                .addParam(I.AVATAR_TYPE,I.AVATAR_TYPE_USER_PATH)
+
+                .addFile2(file)
+
+                .targetClass(String.class)
+
+                .post()
 
                 .execute(listener);
 

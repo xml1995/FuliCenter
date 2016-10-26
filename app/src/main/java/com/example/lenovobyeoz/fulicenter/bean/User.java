@@ -1,5 +1,7 @@
 package com.example.lenovobyeoz.fulicenter.bean;
 
+import com.example.lenovobyeoz.fulicenter.I;
+
 public class User {
 
 
@@ -106,7 +108,7 @@ public class User {
 
     public String getMavatarSuffix() {
 
-        return mavatarSuffix;
+        return mavatarSuffix!=null?mavatarSuffix: I.AVATAR_SUFFIX_JPG;
 
     }
 

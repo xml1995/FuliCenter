@@ -471,6 +471,9 @@ public class ImageLoader {
         return null;
 
     }
+
+
+
     /**
 
      * 则设置图片下载后主线程默认的图片显示代码->mOnImageLoadListener
@@ -719,7 +722,7 @@ public class ImageLoader {
 
                     + I.AND + I.AVATAR_TYPE + "=" + user.getMavatarPath() + I.AND + I.AVATAR_SUFFIX
 
-                    + "=" + user.getMavatarSuffix() + I.AND + "width=200&height=200";
+                    + "=" + user.getMavatarSuffix() + I.AND + "width=200&height=200"+"&"+ user.getMavatarLastUpdateTime();
 
             L.e("useravatar=" + url);
 

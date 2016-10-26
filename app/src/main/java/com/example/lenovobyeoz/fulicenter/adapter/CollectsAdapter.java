@@ -44,9 +44,10 @@ import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.view.FooterViewHolder;
-
 public class CollectsAdapter extends Adapter {
+
     Context mContext;
+
     List<CollectBean> mList;
 
     boolean isMore;
@@ -205,7 +206,17 @@ public class CollectsAdapter extends Adapter {
 
 
 
-    class ColelctsViewHolder extends RecyclerView.ViewHolder {
+    public void remove(CollectBean bean) {
+
+        mList.remove(bean);
+
+        notifyDataSetChanged();
+
+    }
+
+
+
+    class ColelctsViewHolder extends ViewHolder{
 
         @BindView(R.id.ivGoodsThumb)
 

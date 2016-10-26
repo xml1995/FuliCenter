@@ -1,7 +1,12 @@
 package com.example.lenovobyeoz.fulicenter.adapter;
+
+
 import android.content.Context;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
+
+import android.support.v7.widget.RecyclerView.ViewHolder;
 
 import android.view.View;
 
@@ -13,15 +18,13 @@ import android.widget.RelativeLayout;
 
 import android.widget.TextView;
 
-import com.example.lenovobyeoz.fulicenter.I;
-import com.example.lenovobyeoz.fulicenter.R;
-import com.example.lenovobyeoz.fulicenter.bean.CollectBean;
-import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
-import com.example.lenovobyeoz.fulicenter.utils.MFGT;
-import com.example.lenovobyeoz.fulicenter.view.FooterViewHolder;
+
 
 import java.util.ArrayList;
+
 import java.util.List;
+
+
 
 import butterknife.BindView;
 
@@ -29,10 +32,21 @@ import butterknife.ButterKnife;
 
 import butterknife.OnClick;
 
-public class CollectsAdapter extends RecyclerView.Adapter {
+import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
+import com.example.lenovobyeoz.fulicenter.I;
+import com.example.lenovobyeoz.fulicenter.R;
+import com.example.lenovobyeoz.fulicenter.bean.CollectBean;
+import com.example.lenovobyeoz.fulicenter.bean.MessageBean;
+import com.example.lenovobyeoz.fulicenter.net.NetDao;
+import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
+import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.L;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.view.FooterViewHolder;
 
+public class CollectsAdapter extends Adapter {
     Context mContext;
-
     List<CollectBean> mList;
 
     boolean isMore;
@@ -83,9 +97,9 @@ public class CollectsAdapter extends RecyclerView.Adapter {
 
     @Override
 
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RecyclerView.ViewHolder holder = null;
+        ViewHolder holder = null;
 
         if (viewType == I.TYPE_FOOTER) {
 
@@ -105,7 +119,7 @@ public class CollectsAdapter extends RecyclerView.Adapter {
 
     @Override
 
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         if(getItemViewType(position)==I.TYPE_FOOTER){
 
@@ -123,7 +137,7 @@ public class CollectsAdapter extends RecyclerView.Adapter {
 
             vh.mTvGoodsName.setText(goods.getGoodsName());
 
-            vh.mLayoutGoods.setTag(goods.getGoodsId());
+            vh.mLayoutGoods.setTag(goods);
 
         }
 
@@ -223,9 +237,55 @@ public class CollectsAdapter extends RecyclerView.Adapter {
 
         public void onGoodsItemClick(){
 
-            int goodsId = (int) mLayoutGoods.getTag();
+            CollectBean goods = (CollectBean) mLayoutGoods.getTag();
 
-            MFGT.gotoGoodsDetailsActivity(mContext,goodsId);
+            MFGT.gotoGoodsDetailsActivity(mContext,goods.getGoodsId());
+
+        }
+
+        @OnClick(R.id.iv_collect_del)
+
+        public void deleteCollect(){
+
+            final CollectBean goods = (CollectBean) mLayoutGoods.getTag();
+
+            String username = FuLiCenterApplication.getUser().getMuserName();
+
+            NetDao.deleteCollect(mContext, username, goods.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+
+                @Override
+
+                public void onSuccess(MessageBean result) {
+
+                    if(result!=null && result.isSuccess()){
+
+                        mList.remove(goods);
+
+                        notifyDataSetChanged();
+
+                    }else{
+
+                        CommonUtils.showLongToast(result!=null?result.getMsg():
+
+                                mContext.getResources().getString(R.string.delete_collect_fail));
+
+                    }
+
+                }
+
+
+
+                @Override
+
+                public void onError(String error) {
+
+                    L.e("error="+error);
+
+                    CommonUtils.showLongToast(mContext.getResources().getString(R.string.delete_collect_fail));
+
+                }
+
+            });
 
         }
 

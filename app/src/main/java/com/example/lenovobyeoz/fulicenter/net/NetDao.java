@@ -15,7 +15,6 @@ import com.example.lenovobyeoz.fulicenter.utils.MD5;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 
 import java.io.File;
-
 public class NetDao {
 
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
@@ -243,6 +242,42 @@ public class NetDao {
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
 
                 .targetClass(CollectBean[].class)
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void deleteCollect(Context context, String username, int goodsId, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_DELETE_COLLECT)
+
+                .addParam(I.Collect.USER_NAME,username)
+
+                .addParam(I.Collect.GOODS_ID,String.valueOf(goodsId))
+
+                .targetClass(MessageBean.class)
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void isColected(Context context,String username,int goodsId,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_IS_COLLECT)
+
+                .addParam(I.Collect.USER_NAME,username)
+
+                .addParam(I.Collect.GOODS_ID,String.valueOf(goodsId))
+
+                .targetClass(MessageBean.class)
 
                 .execute(listener);
 

@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.CartBean;
+import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
+import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
 
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
     Context mContext;
@@ -42,7 +43,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         CartViewHolder holder = new CartViewHolder(LayoutInflater.from(mContext)
 
-                .inflate( R.layout.item_cart, parent, false));
+                .inflate(R.layout.item_cart, parent, false));
 
         return holder;
 
@@ -56,7 +57,25 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         CartBean cartBean = mList.get(position);
 
+        GoodsDetailsBean goods = cartBean.getGoods();
+
+        if(goods!=null) {
+
+            ImageLoader.downloadImg(mContext, holder.mIvCartThumb, goods.getGoodsThumb());
+
+            holder.mTvCartGoodName.setText(goods.getGoodsName());
+
+            holder.mTvCartPrice.setText(goods.getCurrencyPrice());
+
+        }
+
+        holder.mTvCartCount.setText("("+cartBean.getCount()+")");
+
+        holder.mCbCartSelected.setChecked(false);
+
     }
+
+
 
     @Override
 

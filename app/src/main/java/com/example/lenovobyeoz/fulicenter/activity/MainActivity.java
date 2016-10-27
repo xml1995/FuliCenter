@@ -11,6 +11,7 @@ import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.fragment.BoutiqueFragment;
+import com.example.lenovobyeoz.fulicenter.fragment.CartFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.CategoryFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.NewGoodsFragment;
 import com.example.lenovobyeoz.fulicenter.fragment.PersonalCenterFragment;
@@ -66,6 +67,8 @@ public class MainActivity extends BaseActivity {
 
     CategoryFragment mCategoryFragment;
 
+    CartFragment mCartFragment;
+
     PersonalCenterFragment mPersonalCenterFragment;
 
 
@@ -96,6 +99,8 @@ public class MainActivity extends BaseActivity {
 
         mCategoryFragment = new CategoryFragment();
 
+        mCartFragment = new CartFragment();
+
         mPersonalCenterFragment = new PersonalCenterFragment();
 
         mFragments[0] = mNewGoodsFragment;
@@ -103,6 +108,8 @@ public class MainActivity extends BaseActivity {
         mFragments[1] = mBoutiqueFragment;
 
         mFragments[2] = mCategoryFragment;
+
+        mFragments[3] = mCartFragment;
 
         mFragments[4] = mPersonalCenterFragment;
 
@@ -112,13 +119,13 @@ public class MainActivity extends BaseActivity {
 
                 .add(R.id.fragment_container,mNewGoodsFragment)
 
-                .add(R.id.fragment_container,mBoutiqueFragment)
+//                .add(R.id.fragment_container,mBoutiqueFragment)
 
-                .add(R.id.fragment_container,mCategoryFragment)
+//                .add(R.id.fragment_container,mCategoryFragment)
 
-                .hide(mBoutiqueFragment)
+//                .hide(mBoutiqueFragment)
 
-                .hide(mCategoryFragment)
+//                .hide(mCategoryFragment)
 
                 .show(mNewGoodsFragment)
 
@@ -192,7 +199,15 @@ public class MainActivity extends BaseActivity {
 
             case R.id.layout_cart:
 
-                index = 3;
+                if(FuLiCenterApplication.getUser()==null){
+
+                    MFGT.gotoLoginFromCart(this);
+
+                }else {
+
+                    index = 3;
+
+                }
 
                 break;
 
@@ -300,9 +315,19 @@ public class MainActivity extends BaseActivity {
 
         L.e(TAG,"onActivityResult,requestCode="+requestCode);
 
-        if(requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser()!=null){
+        if(FuLiCenterApplication.getUser()!=null){
 
-            index = 4;
+            if(requestCode == I.REQUEST_CODE_LOGIN) {
+
+                index = 4;
+
+            }
+
+            if(requestCode == I.REQUEST_CODE_LOGIN_FROM_CART){
+
+                index = 3;
+
+            }
 
         }
 

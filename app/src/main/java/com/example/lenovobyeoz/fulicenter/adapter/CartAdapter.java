@@ -56,19 +56,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         CartBean cartBean = mList.get(position);
 
-//        ImageLoader.downloadImg(mContext,holder.mIvBoutiqueImg,boutiqueBean.getImageurl());
-
-//        holder.mTvBoutiqueTitle.setText(boutiqueBean.getTitle());
-
-//        holder.mTvBoutiqueName.setText(boutiqueBean.getName());
-
-//        holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
-
-//        holder.mLayoutBoutiqueItem.setTag(boutiqueBean);
-
     }
-
-
 
     @Override
 

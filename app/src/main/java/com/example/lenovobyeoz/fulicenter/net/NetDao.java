@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.bean.BoutiqueBean;
+import com.example.lenovobyeoz.fulicenter.bean.CartBean;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryChildBean;
 import com.example.lenovobyeoz.fulicenter.bean.CategoryGroupBean;
 import com.example.lenovobyeoz.fulicenter.bean.CollectBean;
@@ -296,6 +297,22 @@ public class NetDao {
                 .addParam(I.Collect.GOODS_ID,String.valueOf(goodsId))
 
                 .targetClass(MessageBean.class)
+
+                .execute(listener);
+
+    }
+
+
+
+    public static void downloadCart(Context context,String username,OkHttpUtils.OnCompleteListener<CartBean[]> listener){
+
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
+
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
+
+                .addParam(I.Cart.USER_NAME,username)
+
+                .targetClass(CartBean[].class)
 
                 .execute(listener);
 

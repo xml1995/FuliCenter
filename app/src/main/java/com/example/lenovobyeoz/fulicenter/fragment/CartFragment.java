@@ -1,5 +1,9 @@
 package com.example.lenovobyeoz.fulicenter.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
+import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
 import com.example.lenovobyeoz.fulicenter.adapter.CartAdapter;
@@ -73,6 +78,10 @@ public class CartFragment extends BaseFragment {
 
 
 
+    updateCartReceiver mReceiver;
+
+
+
     @Nullable
 
     @Override
@@ -102,6 +111,12 @@ public class CartFragment extends BaseFragment {
     protected void setListener() {
 
         setPullDownListener();
+
+        IntentFilter filter = new IntentFilter( I.BROADCAST_UPDATA_CART);
+
+        mReceiver = new updateCartReceiver();
+
+        mContext.registerReceiver(mReceiver,filter);
 
     }
 
@@ -161,9 +176,11 @@ public class CartFragment extends BaseFragment {
 
                     if (list != null && list.size() > 0) {
 
-                        L.e(TAG, "list[0]=" + list.get(0));
+                        mList.clear();
 
-                        mAdapter.initData(list);
+                        mList.addAll(list);
+
+                        mAdapter.initData(mList);
 
                         setCartLayout(true);
 
@@ -275,7 +292,7 @@ public class CartFragment extends BaseFragment {
 
             }
 
-            mTvCartSumPrice.setText("合计:￥"+Double.valueOf(sumPrice));
+            mTvCartSumPrice.setText("合计:￥"+Double.valueOf(rankPrice));
 
             mTvCartSavePrice.setText("节省:￥"+Double.valueOf(sumPrice-rankPrice));
 
@@ -296,6 +313,38 @@ public class CartFragment extends BaseFragment {
         price = price.substring(price.indexOf("￥")+1);
 
         return Integer.valueOf(price);
+
+    }
+
+    class updateCartReceiver extends BroadcastReceiver {
+
+
+
+        @Override
+
+        public void onReceive(Context context, Intent intent) {
+
+            L.e(TAG,"updateCartReceiver...");
+
+            sumPrice();
+
+        }
+
+    }
+
+
+
+    @Override
+
+    public void onDestroy() {
+
+        super.onDestroy();
+
+        if(mReceiver!=null){
+
+            mContext.unregisterReceiver(mReceiver);
+
+        }
 
     }
 

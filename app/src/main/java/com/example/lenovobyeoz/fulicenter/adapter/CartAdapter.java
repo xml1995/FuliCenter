@@ -1,14 +1,17 @@
 package com.example.lenovobyeoz.fulicenter.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.CartBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
@@ -29,9 +32,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         mContext = context;
 
-        mList = new ArrayList<>();
-
-        mList.addAll(list);
+        mList = list;
 
     }
 
@@ -55,7 +56,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
     public void onBindViewHolder(CartViewHolder holder, int position) {
 
-        CartBean cartBean = mList.get(position);
+        final CartBean cartBean = mList.get(position);
 
         GoodsDetailsBean goods = cartBean.getGoods();
 
@@ -73,6 +74,20 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         holder.mCbCartSelected.setChecked(false);
 
+        holder.mCbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                cartBean.setChecked(b);
+
+                mContext.sendBroadcast(new Intent( I.BROADCAST_UPDATA_CART));
+
+            }
+
+        });
+
     }
 
 
@@ -89,13 +104,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
     public void initData(ArrayList<CartBean> list) {
 
-        if (mList != null) {
-
-            mList.clear();
-
-        }
-
-        mList.addAll(list);
+        mList = list;
 
         notifyDataSetChanged();
 

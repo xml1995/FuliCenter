@@ -108,6 +108,8 @@ public interface I {
 
     int CAT_ID=0;
 
+    String BROADCAST_UPDATA_CART = "cn.ucai.fulicenter.update.cart";
+
 
 
     interface Goods {

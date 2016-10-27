@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lenovobyeoz.fulicenter.FuLiCenterApplication;
@@ -18,7 +19,6 @@ import com.example.lenovobyeoz.fulicenter.bean.CartBean;
 import com.example.lenovobyeoz.fulicenter.bean.User;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
-import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class CartFragment extends BaseFragment {
 
@@ -53,6 +55,22 @@ public class CartFragment extends BaseFragment {
 
     ArrayList<CartBean> mList;
 
+    @BindView(R.id.tv_cart_sum_price)
+
+    TextView mTvCartSumPrice;
+
+    @BindView(R.id.tv_cart_save_price)
+
+    TextView mTvCartSavePrice;
+
+    @BindView(R.id.layout_cart)
+
+    RelativeLayout mLayoutCart;
+
+    @BindView(R.id.tv_nothing)
+
+    TextView mTvNothing;
+
 
 
     @Nullable
@@ -61,7 +79,7 @@ public class CartFragment extends BaseFragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
+        View layout = inflater.inflate(R.layout.fragment_cart, container, false);
 
         ButterKnife.bind(this, layout);
 
@@ -69,9 +87,9 @@ public class CartFragment extends BaseFragment {
 
         mList = new ArrayList<>();
 
-        mAdapter = new CartAdapter(mContext,mList);
+        mAdapter = new CartAdapter(mContext, mList);
 
-        super.onCreateView(inflater,container,savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
 
         return layout;
 
@@ -113,7 +131,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
 
-    protected  void initData() {
+    protected void initData() {
 
         downloadCart();
 
@@ -125,7 +143,7 @@ public class CartFragment extends BaseFragment {
 
         User user = FuLiCenterApplication.getUser();
 
-        if(user!=null){
+        if (user != null) {
 
             NetDao.downloadCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<String>() {
 
@@ -135,17 +153,23 @@ public class CartFragment extends BaseFragment {
 
                     ArrayList<CartBean> list = ResultUtils.getCartFromJson(s);
 
-                    L.e(TAG,"result="+list);
+                    L.e(TAG, "result=" + list);
 
                     mSrl.setRefreshing(false);
 
                     mTvRefresh.setVisibility(View.GONE);
 
-                    if(list!=null && list.size()>0){
+                    if (list != null && list.size() > 0) {
 
-                        L.e(TAG,"list[0]="+list.get(0));
+                        L.e(TAG, "list[0]=" + list.get(0));
 
                         mAdapter.initData(list);
+
+                        setCartLayout(true);
+
+                    }else{
+
+                        setCartLayout(false);
 
                     }
 
@@ -157,13 +181,15 @@ public class CartFragment extends BaseFragment {
 
                 public void onError(String error) {
 
+                    setCartLayout(false);
+
                     mSrl.setRefreshing(false);
 
                     mTvRefresh.setVisibility(View.GONE);
 
                     CommonUtils.showShortToast(error);
 
-                    L.e("error:"+error);
+                    L.e("error:" + error);
 
                 }
 
@@ -177,7 +203,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
 
-    protected  void initView() {
+    protected void initView() {
 
         mSrl.setColorSchemeColors(
 
@@ -200,6 +226,76 @@ public class CartFragment extends BaseFragment {
         mRv.setAdapter(mAdapter);
 
         mRv.addItemDecoration(new SpaceItemDecoration(12));
+
+        setCartLayout(false);
+
+    }
+
+
+
+    private void setCartLayout(boolean hasCart) {
+
+        mLayoutCart.setVisibility(hasCart?View.VISIBLE:View.GONE);
+
+        mTvNothing.setVisibility(hasCart?View.GONE:View.VISIBLE);
+
+        mRv.setVisibility(hasCart?View.VISIBLE:View.GONE);
+
+        sumPrice();
+
+    }
+
+
+
+    @OnClick(R.id.tv_cart_buy)
+
+    public void onClick() {
+
+    }
+
+
+
+    private void sumPrice(){
+
+        int sumPrice = 0;
+
+        int rankPrice = 0;
+
+        if(mList!=null && mList.size()>0){
+
+            for (CartBean c:mList){
+
+                if(c.isChecked()){
+
+                    sumPrice += getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
+
+                    rankPrice += getPrice(c.getGoods().getRankPrice())*c.getCount();
+
+                }
+
+            }
+
+            mTvCartSumPrice.setText("合计:￥"+Double.valueOf(sumPrice));
+
+            mTvCartSavePrice.setText("节省:￥"+Double.valueOf(sumPrice-rankPrice));
+
+
+
+        }else{
+
+            mTvCartSumPrice.setText("合计:￥0");
+
+            mTvCartSavePrice.setText("节省:￥0");
+
+        }
+
+    }
+
+    private int getPrice(String price){
+
+        price = price.substring(price.indexOf("￥")+1);
+
+        return Integer.valueOf(price);
 
     }
 

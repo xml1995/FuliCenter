@@ -21,6 +21,7 @@ import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ConvertUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
+import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 import com.example.lenovobyeoz.fulicenter.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -126,21 +127,23 @@ public class CartFragment extends BaseFragment {
 
         if(user!=null){
 
-            NetDao.downloadCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+            NetDao.downloadCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<String>() {
 
                 @Override
 
-                public void onSuccess(CartBean[] result) {
+                public void onSuccess(String s) {
 
-                    L.e(TAG,"result="+result);
+                    ArrayList<CartBean> list = ResultUtils.getCartFromJson(s);
+
+                    L.e(TAG,"result="+list);
 
                     mSrl.setRefreshing(false);
 
                     mTvRefresh.setVisibility(View.GONE);
 
-                    if(result!=null && result.length>0){
+                    if(list!=null && list.size()>0){
 
-                        ArrayList<CartBean> list = ConvertUtils.array2List(result);
+                        L.e(TAG,"list[0]="+list.get(0));
 
                         mAdapter.initData(list);
 
@@ -156,7 +159,7 @@ public class CartFragment extends BaseFragment {
 
                     mSrl.setRefreshing(false);
 
-                    mTvRefresh.setVisibility( View.GONE);
+                    mTvRefresh.setVisibility(View.GONE);
 
                     CommonUtils.showShortToast(error);
 

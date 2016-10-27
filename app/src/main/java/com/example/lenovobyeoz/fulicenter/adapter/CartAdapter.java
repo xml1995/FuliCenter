@@ -15,11 +15,16 @@ import com.example.lenovobyeoz.fulicenter.I;
 import com.example.lenovobyeoz.fulicenter.R;
 import com.example.lenovobyeoz.fulicenter.bean.CartBean;
 import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
+import com.example.lenovobyeoz.fulicenter.bean.MessageBean;
+import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
     Context mContext;
@@ -72,7 +77,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
         holder.mTvCartCount.setText("("+cartBean.getCount()+")");
 
-        holder.mCbCartSelected.setChecked(false);
+        holder.mCbCartSelected.setChecked(cartBean.isChecked());
 
         holder.mCbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -82,11 +87,13 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
 
                 cartBean.setChecked(b);
 
-                mContext.sendBroadcast(new Intent( I.BROADCAST_UPDATA_CART));
+                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
 
             }
 
         });
+
+        holder.mIvCartAdd.setTag(position);
 
     }
 
@@ -149,6 +156,126 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
             super(view);
 
             ButterKnife.bind(this, view);
+
+        }
+
+
+
+        @OnClick(R.id.iv_cart_add)
+
+        public void addCart(){
+
+            final int position = (int) mIvCartAdd.getTag();
+
+            CartBean cart = mList.get(position);
+
+            NetDao.updateCart(mContext, cart.getId(), cart.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+
+                @Override
+
+                public void onSuccess(MessageBean result) {
+
+                    if(result!=null && result.isSuccess()){
+
+                        mList.get(position).setCount(mList.get(position).getCount()+1);
+
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+
+                        mTvCartCount.setText("("+(mList.get(position).getCount())+")");
+
+                    }
+
+                }
+
+
+
+                @Override
+
+                public void onError(String error) {
+
+
+
+                }
+
+            });
+
+        }
+
+
+
+        @OnClick(R.id.iv_cart_del)
+
+        public void delCart(){
+
+            final int position = (int) mIvCartAdd.getTag();
+
+            CartBean cart = mList.get(position);
+
+            if(cart.getCount()>1) {
+
+                NetDao.updateCart(mContext, cart.getId(), cart.getCount() - 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+
+                    @Override
+
+                    public void onSuccess(MessageBean result) {
+
+                        if (result != null && result.isSuccess()) {
+
+                            mList.get(position).setCount(mList.get(position).getCount() - 1);
+
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+
+                            mTvCartCount.setText("(" + (mList.get(position).getCount()) + ")");
+
+                        }
+
+                    }
+
+
+
+                    @Override
+
+                    public void onError(String error) {
+
+
+
+                    }
+
+                });
+
+            }else{
+
+                NetDao.deleteCart(mContext, cart.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+
+                    @Override
+
+                    public void onSuccess(MessageBean result) {
+
+                        if(result!=null && result.isSuccess()){
+
+                            mList.remove(position);
+
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+
+                            notifyDataSetChanged();
+
+                        }
+
+                    }
+
+
+
+                    @Override
+
+                    public void onError(String error) {
+
+
+
+                    }
+
+                });
+
+            }
 
         }
 

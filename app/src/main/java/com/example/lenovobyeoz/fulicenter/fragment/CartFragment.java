@@ -112,7 +112,7 @@ public class CartFragment extends BaseFragment {
 
         setPullDownListener();
 
-        IntentFilter filter = new IntentFilter( I.BROADCAST_UPDATA_CART);
+        IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATA_CART);
 
         mReceiver = new updateCartReceiver();
 
@@ -300,6 +300,8 @@ public class CartFragment extends BaseFragment {
 
         }else{
 
+            setCartLayout(false);
+
             mTvCartSumPrice.setText("合计:￥0");
 
             mTvCartSavePrice.setText("节省:￥0");
@@ -316,7 +318,7 @@ public class CartFragment extends BaseFragment {
 
     }
 
-    class updateCartReceiver extends BroadcastReceiver {
+    class updateCartReceiver extends BroadcastReceiver{
 
 
 
@@ -327,6 +329,8 @@ public class CartFragment extends BaseFragment {
             L.e(TAG,"updateCartReceiver...");
 
             sumPrice();
+
+            setCartLayout(mList!=null&&mList.size()>0);
 
         }
 

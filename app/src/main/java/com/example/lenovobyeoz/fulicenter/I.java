@@ -1,5 +1,7 @@
 package com.example.lenovobyeoz.fulicenter;
 
+
+
 public interface I {
 
     String SERVER_ROOT = "http://101.251.196.90:8000/FuLiCenterServerV2.0/";
@@ -109,6 +111,8 @@ public interface I {
     int CAT_ID=0;
 
     String BROADCAST_UPDATA_CART = "cn.ucai.fulicenter.update.cart";
+
+    int CART_CHECKED_DEFAULT = 0;
 
 
 

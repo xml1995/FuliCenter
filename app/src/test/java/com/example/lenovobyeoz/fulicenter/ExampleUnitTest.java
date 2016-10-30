@@ -1,6 +1,6 @@
 package com.example.lenovobyeoz.fulicenter;
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 

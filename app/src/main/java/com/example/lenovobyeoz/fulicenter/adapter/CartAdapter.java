@@ -18,6 +18,7 @@ import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.bean.MessageBean;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.ImageLoader;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -156,6 +157,20 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder> {
             super(view);
 
             ButterKnife.bind(this, view);
+
+        }
+
+
+
+        @OnClick({R.id.iv_cart_thumb,R.id.tv_cart_good_name,R.id.tv_cart_price})
+
+        public void gotoDetail(){
+
+            final int position = (int) mIvCartAdd.getTag();
+
+            CartBean cart = mList.get(position);
+
+            MFGT.gotoGoodsDetailsActivity(mContext,cart.getGoodsId());
 
         }
 

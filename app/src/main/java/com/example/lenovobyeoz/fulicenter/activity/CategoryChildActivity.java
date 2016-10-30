@@ -39,9 +39,6 @@ public class CategoryChildActivity extends BaseActivity {
     @BindView(R.id.srl)
 
     SwipeRefreshLayout mSrl;
-
-
-
     CategoryChildActivity mContext;
 
     GoodsAdapter mAdapter;

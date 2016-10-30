@@ -35,7 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class CartFragment extends BaseFragment {
 
     private static final String TAG = CartFragment.class.getSimpleName();
@@ -300,8 +299,6 @@ public class CartFragment extends BaseFragment {
 
         }else{
 
-            setCartLayout(false);
-
             mTvCartSumPrice.setText("合计:￥0");
 
             mTvCartSavePrice.setText("节省:￥0");
@@ -349,6 +346,20 @@ public class CartFragment extends BaseFragment {
             mContext.unregisterReceiver(mReceiver);
 
         }
+
+    }
+
+
+
+    @Override
+
+    public void onResume() {
+
+        super.onResume();
+
+        L.e(TAG,"onResume.......");
+
+        initData();
 
     }
 

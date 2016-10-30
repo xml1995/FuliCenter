@@ -25,6 +25,7 @@ import com.example.lenovobyeoz.fulicenter.bean.User;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
+import com.example.lenovobyeoz.fulicenter.utils.MFGT;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.ResultUtils;
 import com.example.lenovobyeoz.fulicenter.view.SpaceItemDecoration;
@@ -78,6 +79,8 @@ public class CartFragment extends BaseFragment {
 
 
     updateCartReceiver mReceiver;
+
+    String cartIds="";
 
 
 
@@ -265,13 +268,25 @@ public class CartFragment extends BaseFragment {
 
     @OnClick(R.id.tv_cart_buy)
 
-    public void onClick() {
+    public void buy() {
+
+        if(cartIds!=null && !cartIds.equals("") && cartIds.length()>0){
+
+            MFGT.gotoBuy(mContext,cartIds);
+
+        }else{
+
+            CommonUtils.showLongToast(R.string.order_nothing);
+
+        }
 
     }
 
 
 
     private void sumPrice(){
+
+        cartIds = "";
 
         int sumPrice = 0;
 
@@ -282,6 +297,8 @@ public class CartFragment extends BaseFragment {
             for (CartBean c:mList){
 
                 if(c.isChecked()){
+
+                    cartIds += c.getId()+",";
 
                     sumPrice += getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
 
@@ -298,6 +315,8 @@ public class CartFragment extends BaseFragment {
 
 
         }else{
+
+            cartIds = "";
 
             mTvCartSumPrice.setText("合计:￥0");
 

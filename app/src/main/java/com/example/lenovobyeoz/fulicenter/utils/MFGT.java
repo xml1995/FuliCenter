@@ -10,6 +10,7 @@ import com.example.lenovobyeoz.fulicenter.activity.CollectsActivity;
 import com.example.lenovobyeoz.fulicenter.activity.GoodsDetailActivity;
 import com.example.lenovobyeoz.fulicenter.activity.LoginActivity;
 import com.example.lenovobyeoz.fulicenter.activity.MainActivity;
+import com.example.lenovobyeoz.fulicenter.activity.OrderActivity;
 import com.example.lenovobyeoz.fulicenter.activity.RegisterActivity;
 import com.example.lenovobyeoz.fulicenter.activity.UpdateNickActivity;
 import com.example.lenovobyeoz.fulicenter.activity.UserProfileActivity;
@@ -172,6 +173,16 @@ public class MFGT {
     public static void gotoCollects(Activity context){
 
         startActivity(context, CollectsActivity.class);
+
+    }
+
+
+
+    public static void gotoBuy(Activity context,String cartIds){
+
+        Intent intent = new Intent(context, OrderActivity.class).putExtra(I.Cart.ID,cartIds);
+
+        startActivity(context,intent);
 
     }
 

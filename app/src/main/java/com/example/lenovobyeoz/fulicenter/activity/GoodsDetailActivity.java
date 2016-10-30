@@ -14,6 +14,7 @@ import com.example.lenovobyeoz.fulicenter.bean.GoodsDetailsBean;
 import com.example.lenovobyeoz.fulicenter.bean.MessageBean;
 import com.example.lenovobyeoz.fulicenter.bean.User;
 import com.example.lenovobyeoz.fulicenter.net.NetDao;
+import com.example.lenovobyeoz.fulicenter.onekeyshare.OnekeyShare;
 import com.example.lenovobyeoz.fulicenter.utils.OkHttpUtils;
 import com.example.lenovobyeoz.fulicenter.utils.CommonUtils;
 import com.example.lenovobyeoz.fulicenter.utils.L;
@@ -24,6 +25,7 @@ import com.example.lenovobyeoz.fulicenter.view.SlideAutoLoopView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.ShareSDK;
 
 public class GoodsDetailActivity extends BaseActivity {
 

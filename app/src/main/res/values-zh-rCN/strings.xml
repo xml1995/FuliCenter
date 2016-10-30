@@ -87,4 +87,6 @@
 
     <string name="order_nothing">您还没有选择宝贝哦</string>
 
+    <string name="confirm_order">确认订单</string>
+
 </resources>
